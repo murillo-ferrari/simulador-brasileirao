@@ -13,7 +13,8 @@ export const state = {
 	loading: true,
 	simulatedMatches: new Map(),
 	allMatches: {},
-	initialStandings: []
+	initialStandings: [],
+	previousStandings: []
 };
 
 // DataManager handles loading and resetting data 
@@ -42,6 +43,8 @@ export const DataManager = {
 			const roundFixtures = await fixturesRes.json();
 			state.initialStandings = Utils.deepClone(initialStandings);
 			state.standings = state.initialStandings.map(team => TeamService.ensureTeamStats(team));
+			// initialize previousStandings snapshot
+			state.previousStandings = JSON.parse(JSON.stringify(state.standings || []));
 			// Store the date for each round in allMatches as a property
 			state.allMatches = Object.keys(roundFixtures).reduce((acc, round) => {
 				const matches = roundFixtures[round].matches.map(MatchService.initializeMatch);

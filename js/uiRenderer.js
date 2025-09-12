@@ -4,7 +4,6 @@ import { MatchService } from './matchService.js';
 import { CONFIG } from './config.js';
 import { state } from './dataManager.js';
 import { StandingsCalculator } from './standingsCalculator.js';
-import { UIManager } from './uiManager.js';
 import { MatchManager } from './matchManager.js';
 
 export const UIRenderer = {
@@ -81,7 +80,7 @@ export const UIRenderer = {
 
             const standings = Array.isArray(state && state.standings) ? state.standings : [];
             const sorted = StandingsCalculator.sortStandings(standings || []);
-            const previous = UIManager && UIManager._previousStandings || [];
+            const previous = state.previousStandings || [];
             const rawChanges = StandingsCalculator.getPositionChanges(sorted, previous);
 
             // Only show indicators for teams that actually moved
@@ -151,9 +150,7 @@ export const UIRenderer = {
             });
 
             // After rendering, update previous standings snapshot to the new sorted list
-            if (UIManager) {
-                UIManager._previousStandings = JSON.parse(JSON.stringify(sorted || []));
-            }
+            state.previousStandings = JSON.parse(JSON.stringify(sorted || []));
 
             // Trigger a brief animation for visible indicators, then remove the animation class so it doesn't loop forever
             setTimeout(() => {
