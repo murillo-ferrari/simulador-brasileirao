@@ -2,7 +2,7 @@ import { CONFIG } from './config.js';
 import { Utils } from './utils.js';
 import { TeamService } from './teamService.js';
 import { MatchService } from './matchService.js';
-import { elements } from './uiManager.js';
+import { UIManager } from './uiManager.js';
 
 // Data state management
 export const state = {
@@ -56,6 +56,10 @@ export const DataManager = {
 			// Set matches for the current round and set the round date
 			state.matches = state.allMatches[state.currentRound] || [];
 			state.currentRoundDate = (roundFixtures[state.currentRound] && roundFixtures[state.currentRound].date) || '';
+			// Inform UIManager so it can update round title/date immediately
+			if (typeof UIManager !== 'undefined' && UIManager && typeof UIManager.updateRoundInfo === 'function') {
+				UIManager.updateRoundInfo(state.currentRound, state.currentRoundDate);
+			}
 			return true;
 		} catch (e) {
 			console.error('DataManager.loadData error:', e);
@@ -77,9 +81,8 @@ export const DataManager = {
 			state.simulatedMatches.clear();
 			state.currentRound = CONFIG.MIN_ROUND;
 
-			// Reset UI round title and date if elements exist
-			if (elements.roundTitle) elements.roundTitle.textContent = `Rodada ${CONFIG.MIN_ROUND}`;
-			if (elements.roundDate) elements.roundDate.textContent = state.allMatches[CONFIG.MIN_ROUND].date || '';
+			// Reset UI round title and date via UIManager
+			if (UIManager && typeof UIManager.resetRoundInfo === 'function') UIManager.resetRoundInfo();
 
 			return this.loadData();
 		}

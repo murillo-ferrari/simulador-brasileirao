@@ -28,6 +28,10 @@ async function init() {
 		}
 		// setup event listeners
 		if (typeof setupEventListeners === "function") setupEventListeners();
+		// ensure UI shows the loaded round title and date
+		if (UIManager && typeof UIManager.updateRoundInfo === "function") {
+			UIManager.updateRoundInfo(state.currentRound, state.currentRoundDate);
+		}
 
 		// render initial UI
 		if (UIManager && typeof UIManager.renderStandings === "function")

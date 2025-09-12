@@ -3,18 +3,36 @@ import { DataManager, state } from './dataManager.js';
 import { UIRenderer } from './uiRenderer.js';
 import { CONFIG } from './config.js';
 
-// UI management: rendering and event handling
-export const elements = {
-	matchesList: document.getElementById('matches-list'),
-	prevRoundBtn: document.getElementById('prev-round'),
-	nextRoundBtn: document.getElementById('next-round'),
-	roundTitle: document.getElementById('round-title'),
-	roundDate: document.getElementById('round-date'),
-	loading: document.getElementById('loading'),
-	simulateRoundBtn: document.getElementById('simulate-round'),
-	clearRoundBtn: document.getElementById('clear-round'),
-	resetChampionshipBtn: document.getElementById('reset-championship')
+// Elements are queried lazily to avoid timing issues when modules load
+const elements = {
+	matchesList: null,
+	prevRoundBtn: null,
+	nextRoundBtn: null,
+	roundTitle: null,
+	roundDate: null,
+	loading: null,
+	simulateRoundBtn: null,
+	clearRoundBtn: null,
+	resetChampionshipBtn: null
 };
+
+/**
+ * Retrieves fresh references to the UI elements needed by UIManager.
+ * Lazily reloads the elements from the DOM, so this can be called at any
+ * time to ensure the elements are current.
+ * @private
+ */
+function refreshElements() {
+	elements.matchesList = document.getElementById('matches-list');
+	elements.prevRoundBtn = document.getElementById('prev-round');
+	elements.nextRoundBtn = document.getElementById('next-round');
+	elements.roundTitle = document.getElementById('round-title');
+	elements.roundDate = document.getElementById('round-date');
+	elements.loading = document.getElementById('loading');
+	elements.simulateRoundBtn = document.getElementById('simulate-round');
+	elements.clearRoundBtn = document.getElementById('clear-round');
+	elements.resetChampionshipBtn = document.getElementById('reset-championship');
+}
 
 /**
  * Sets up event listeners for the app's UI elements, such as buttons and keyboard shortcuts.
@@ -22,24 +40,29 @@ export const elements = {
  * @private
  */
 function setupEventListeners() {
+	// Ensure elements are current
+	refreshElements();
+
 	// Navigation buttons
-	elements.prevRoundBtn.addEventListener('click', () => UIManager.changeRound('prev'));
-	elements.nextRoundBtn.addEventListener('click', () => UIManager.changeRound('next'));
+	if (elements.prevRoundBtn) elements.prevRoundBtn.addEventListener('click', () => UIManager.changeRound('prev'));
+	if (elements.nextRoundBtn) elements.nextRoundBtn.addEventListener('click', () => UIManager.changeRound('next'));
 
 	// Action buttons
-	elements.simulateRoundBtn.addEventListener('click', () => {
+	if (elements.simulateRoundBtn) elements.simulateRoundBtn.addEventListener('click', () => {
 		MatchManager.simulateRound();
 		UIManager.renderMatches();
 		UIManager.renderStandings();
 	});
-	elements.clearRoundBtn.addEventListener('click', () => {
+	if (elements.clearRoundBtn) elements.clearRoundBtn.addEventListener('click', () => {
 		MatchManager.clearRound();
 		UIManager.renderMatches();
 		UIManager.renderStandings();
 	});
-	elements.resetChampionshipBtn.addEventListener('click', async () => {
+	if (elements.resetChampionshipBtn) elements.resetChampionshipBtn.addEventListener('click', async () => {
 		const ok = await DataManager.resetChampionship();
 		if (ok) {
+			// Update round title/date from state, then re-render
+			UIManager.updateRoundInfo(state.currentRound, state.currentRoundDate);
 			UIManager.renderStandings();
 			UIManager.renderMatches();
 		}
@@ -113,6 +136,10 @@ export const UIManager = {
 	 * @private
 	 */
 	renderMatches() {
+		// keep UI in sync with state before rendering
+		refreshElements();
+		if (elements.roundTitle) elements.roundTitle.textContent = `Rodada ${state.currentRound}`;
+		if (elements.roundDate) elements.roundDate.textContent = state.currentRoundDate || '';
 		UIRenderer.renderMatches();
 	},
 
@@ -133,6 +160,7 @@ export const UIManager = {
 		state.matches = state.allMatches[state.currentRound] || [];
 
 		// Update UI
+		refreshElements();
 		if (elements.roundTitle) elements.roundTitle.textContent = `Rodada ${state.currentRound}`;
 		if (elements.prevRoundBtn) elements.prevRoundBtn.disabled = state.currentRound <= min;
 		if (elements.nextRoundBtn) elements.nextRoundBtn.disabled = state.currentRound >= max;
@@ -143,6 +171,27 @@ export const UIManager = {
 		if (elements.roundDate) elements.roundDate.textContent = state.currentRoundDate;
 
 		UIManager.renderMatches();
+	}
+,
+
+	/**
+	 * Update the round title and date in the UI
+	 * @param {number} round
+	 * @param {string} date
+	 */
+	updateRoundInfo(round, date) {
+		refreshElements();
+		if (elements.roundTitle) elements.roundTitle.textContent = `Rodada ${round}`;
+		if (elements.roundDate) elements.roundDate.textContent = date || '';
+	},
+
+	/**
+	 * Reset round title/date to defaults
+	 */
+	resetRoundInfo(date) {
+		refreshElements();
+		if (elements.roundTitle) elements.roundTitle.textContent = `Rodada ${CONFIG.MIN_ROUND}`;
+		if (elements.roundDate) elements.roundDate.textContent = date || '';
 	}
 };
 
