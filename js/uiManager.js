@@ -101,149 +101,23 @@ export const UIManager = {
 	hideLoading() {
 		if (elements.loading) elements.loading.style.display = 'none';
 	},
-	
+
 	/**
-	 * Renders the standings table based on the current state.standings.
-	 * Handles both fixed and scrollable columns. If the previous standings
-	 * are stored, it also applies position changes (up, down, or none) to
-	 * the rendered rows.
+	 * Renders the standings table by delegating to UIRenderer.renderStandings.
 	 * @private
 	 */
 	renderStandings() {
-		try {
-			const fixedBody = document.getElementById('standings-fixed-body');
-			const scrollBody = document.getElementById('standings-scroll-body');
-			if (!fixedBody || !scrollBody) return;
-
-					const standings = Array.isArray(state && state.standings) ? state.standings : [];
-			const sorted = StandingsCalculator.sortStandings(standings || []);
-			const previous = UIManager._previousStandings || [];
-			const rawChanges = StandingsCalculator.getPositionChanges(sorted, previous);
-			// Only show indicators for teams that actually moved
-			const visibleChanges = {};
-			Object.keys(rawChanges).forEach(id => {
-				const ch = rawChanges[id];
-				if (!ch) return;
-				if (ch.direction !== 'none') visibleChanges[id] = ch;
-			});
-
-			fixedBody.innerHTML = '';
-			scrollBody.innerHTML = '';
-
-			sorted.forEach(team => {
-				// determine position change indicator for this team (only visibleChanges are shown)
-				const change = (visibleChanges && visibleChanges[team.id]) || null;
-				let changeIndicator = '';
-				if (change) {
-					if (change.direction === 'up') {
-						changeIndicator = `<span class="change-indicator absolute -left-6 w-4 h-4 flex items-center justify-center text-green-600 font-bold" title="Subiu ${change.positionsChanged} posição(ões)" aria-hidden="true">↑</span>`;
-					} else if (change.direction === 'down') {
-						changeIndicator = `<span class="change-indicator absolute -left-6 w-4 h-4 flex items-center justify-center text-red-600 font-bold" title="Desceu ${change.positionsChanged} posição(ões)" aria-hidden="true">↓</span>`;
-					} else if (change.direction === 'none') {
-						changeIndicator = `<span class="change-indicator absolute -left-6 w-4 h-4 flex items-center justify-center text-gray-400 font-bold" title="Manteve a posição" aria-hidden="true">−</span>`;
-					}
-				}
-
-				// Fixed columns: position, team (logo + name), points
-				const fixedRow = document.createElement('tr');
-				fixedRow.innerHTML = `
-					<td>
-						<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${team.position <= 4 ? 'bg-green-100 text-green-800' : ''}">${team.position}</span>
-					</td>
-					<td>
-						<div class="relative flex items-center gap-2">
-							${changeIndicator}
-							<img class="w-8 h-8 object-contain" src="${TeamService.getTeamLogo(team)}" alt="${team.name}" onerror="this.src='https://via.placeholder.com/50'">
-							<div>${team.name}</div>
-						</div>
-					</td>
-					<td class="text-center font-bold">${team.points}</td>
-				`;
-				fixedBody.appendChild(fixedRow);
-
-				// Scrollable columns: games, wins, draws, losses, gp, gc, sg
-				const scrollRow = document.createElement('tr');
-				scrollRow.innerHTML = `
-					<td class="text-center">${team.games || 0}</td>
-					<td class="text-center">${team.victories || 0}</td>
-					<td class="text-center">${team.draws || 0}</td>
-					<td class="text-center">${team.defeats || 0}</td>
-					<td class="text-center">${team.goal_pro || 0}</td>
-					<td class="text-center">${team.goal_against || 0}</td>
-					<td class="text-center ${team.balance_goals >= 0 ? 'text-green-600' : 'text-red-600'}">${team.balance_goals >= 0 ? '+' : ''}${team.balance_goals || 0}</td>
-				`;
-				scrollBody.appendChild(scrollRow);
-			});
-
-			// After rendering, update previous standings snapshot to the new sorted list
-			UIManager._previousStandings = JSON.parse(JSON.stringify(sorted || []));
-
-			// Trigger a brief animation for visible indicators, then remove the animation class so it doesn't loop forever
-			// We add 'animate-bounce' for a short time, then remove it
-			setTimeout(() => {
-				const nodes = document.querySelectorAll('.change-indicator');
-				nodes.forEach(n => n.classList.add('animate-bounce'));
-				setTimeout(() => {
-					nodes.forEach(n => n.classList.remove('animate-bounce'));
-				}, 1200);
-			}, 50);
-		} catch (err) {
-			console.error('Erro ao renderizar classificação:', err);
-		}
+		UIRenderer.renderStandings();
 	},
-	
+
 	/**
-	 * Renders the matches table based on the current state.matches.
-	 * Handles both the case where there are no matches and the case
-	 * where there are matches. If there are matches, it renders the table
-	 * with input fields for score editing and attaches a simple input change
-	 * handler to update state.matches when numbers change. If a MatchManager
-	 * instance is available, it delegates the score update to its
-	 * updateMatchScore method. Otherwise, it updates the state.matches object
-	 * directly.
+	 * Renders the matches table by delegating to UIRenderer.renderMatches.
 	 * @private
 	 */
 	renderMatches() {
-		try {
-			const list = elements.matchesList || document.getElementById('matches-list');
-			if (!list) return;
-			const matches = (state && state.matches) || [];
-			if (!matches || matches.length === 0) {
-				list.innerHTML = UIRenderer.renderEmptyMatches();
-				return;
-			}
-			list.innerHTML = matches.map(m => UIRenderer.renderMatchCard(m)).join('');
-
-			// attach simple input change handler: update state when numbers change
-			const inputs = list.querySelectorAll('.match-input');
-			inputs.forEach(inp => {
-				inp.addEventListener('change', (e) => {
-					const id = e.target.getAttribute('data-match-id');
-					const field = e.target.getAttribute('data-field');
-					const raw = e.target.value;
-					let value;
-					if (raw === '' || raw === null) {
-						value = ""; // preserve empty state
-					} else {
-						const n = parseInt(raw, 10);
-						value = Number.isNaN(n) ? "" : n;
-					}
-					// delegate to MatchManager when available
-					if (MatchManager && typeof MatchManager.updateMatchScore === 'function') {
-						MatchManager.updateMatchScore(id, field, value);
-					} else {
-						const match = state.matches.find(m => String(m.id) === String(id));
-						if (match && field) {
-							match[field] = value;
-						}
-					}
-				});
-			});
-		} catch (err) {
-			console.error('Erro ao renderizar partidas:', err);
-		}
+		UIRenderer.renderMatches();
 	},
-	
+
 	/**
 	 * Changes the current round by one, either going to the previous or
 	 * next round, depending on the given direction. Updates the state.matches

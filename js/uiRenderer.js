@@ -3,70 +3,11 @@ import { TeamService } from './teamService.js';
 import { MatchService } from './matchService.js';
 import { CONFIG } from './config.js';
 import { state } from './dataManager.js';
+import { StandingsCalculator } from './standingsCalculator.js';
+import { UIManager } from './uiManager.js';
+import { MatchManager } from './matchManager.js';
 
 export const UIRenderer = {
-    
-    /**
-     * Renders a table row for a team in the standings.
-     * If `positionChanges` is provided, it will display an indicator
-     * of the position change, if any.
-     * @param {Object} team - an object with the team's data
-     * @param {Object} [positionChanges] - an object with the position changes
-     *   for each team, if any. Each key is the team ID and the value is an
-     *   object with the properties `direction` and `positionsChanged`.
-     * @returns {string} the HTML for the table row
-     */
-    renderStandingRow(team, positionChanges = {}) {
-        const change = positionChanges[team.id];
-        let changeIndicator = '';
-        if (change) {
-            if (change.direction === 'up') {
-                changeIndicator = `<span class="absolute -left-6 w-4 h-4 flex items-center justify-center animate-bounce text-green-600 font-bold" title="Subiu ${change.positionsChanged} posição(ões)">↑</span>`;
-            } else if (change.direction === 'down') {
-                changeIndicator = `<span class="absolute -left-6 w-4 h-4 flex items-center justify-center animate-bounce text-red-600 font-bold" title="Desceu ${change.positionsChanged} posição(ões)">↓</span>`;
-            } else if (change.direction === 'none') {
-                changeIndicator = `<span class="absolute -left-6 w-4 h-4 flex items-center justify-center text-gray-400 font-bold" title="Manteve a posição">−</span>`;
-            }
-        }
-        let badgeClass = '';
-        switch (true) {
-            case team.position <= 4:
-                badgeClass = 'bg-green-100 text-green-800'; break;
-            case team.position <= 6:
-                badgeClass = 'bg-blue-100 text-blue-800'; break;
-            case team.position <= 12:
-                badgeClass = 'bg-orange-100 text-orange-800'; break;
-            case team.position <= 16:
-                badgeClass = 'bg-gray-100 text-gray-700'; break;
-            default:
-                badgeClass = 'bg-red-100 text-red-800'; break;
-        }
-        return `
-            <td>
-                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${badgeClass}">
-                    ${team.position}
-                </span>
-            </td>
-            <td>
-                <div class="relative flex items-center gap-2">
-                    ${changeIndicator}
-                    <img class="w-8 h-8 object-contain" src="${TeamService.getTeamLogo(team)}" alt="${team.name}">
-                    <div>${team.name}</div>
-                </div>
-            </td>
-            <td class="text-center font-bold">${team.points ?? 0}</td>
-            <td class="text-center"><span class="block max-w-[3rem] overflow-x-auto whitespace-nowrap">${team.games ?? 0}</span></td>
-            <td class="text-center text-green-600"><span class="block max-w-[3rem] overflow-x-auto whitespace-nowrap">${team.victories ?? 0}</span></td>
-            <td class="text-center text-yellow-600"><span class="block max-w-[3rem] overflow-x-auto whitespace-nowrap">${team.draws ?? 0}</span></td>
-            <td class="text-center text-red-600"><span class="block max-w-[3rem] overflow-x-auto whitespace-nowrap">${team.defeats ?? 0}</span></td>
-            <td class="text-center"><span class="block max-w-[3rem] overflow-x-auto whitespace-nowrap">${team.goal_pro ?? 0}</span></td>
-            <td class="text-center"><span class="block max-w-[3rem] overflow-x-auto whitespace-nowrap">${team.goal_against ?? 0}</span></td>
-            <td class="text-center ${ (team.balance_goals ?? 0) >= 0 ? 'text-green-600' : 'text-red-600' }">
-                <span class="block max-w-[3rem] overflow-x-auto whitespace-nowrap">${ (team.balance_goals ?? 0) > 0 ? '+' : '' }${team.balance_goals ?? 0}</span>
-            </td>
-        `;
-    },
-
     renderMatchCard(match) {
     const homeTeam = TeamService.getTeamById(match.homeTeam.id, state) || match.homeTeam;
     const awayTeam = TeamService.getTeamById(match.awayTeam.id, state) || match.awayTeam;
@@ -102,5 +43,162 @@ export const UIRenderer = {
                 <p>Nenhum jogo disponível para esta rodada</p>
             </div>
         `;
+    },
+
+    /**
+     * Renders the standings table based on the current state.standings.
+     * Handles both fixed and scrollable columns. If the previous standings
+     * are stored, it also applies position changes (up, down, or none) to
+     * the rendered rows.
+     * @public
+     */
+    renderStandings() {
+        try {
+            const fixedBody = document.getElementById('standings-fixed-body');
+            fixedBody.classList.add('flex', 'flex-col');
+            const scrollBody = document.getElementById('standings-scroll-body');
+
+            if (!fixedBody || !scrollBody) return;
+
+            const standings = Array.isArray(state && state.standings) ? state.standings : [];
+            const sorted = StandingsCalculator.sortStandings(standings || []);
+            const previous = UIManager && UIManager._previousStandings || [];
+            const rawChanges = StandingsCalculator.getPositionChanges(sorted, previous);
+
+            // Only show indicators for teams that actually moved
+            const visibleChanges = {};
+            Object.keys(rawChanges).forEach(id => {
+                const ch = rawChanges[id];
+                if (!ch) return;
+                if (ch.direction !== 'none') visibleChanges[id] = ch;
+            });
+
+            fixedBody.innerHTML = '';
+            scrollBody.innerHTML = '';
+
+            sorted.forEach(team => {
+                // determine position change indicator for this team (only visibleChanges are shown)
+                const change = (visibleChanges && visibleChanges[team.id]) || null;
+                let changeIndicator = '';
+                if (change) {
+                    if (change.direction === 'up') {
+                        changeIndicator = `<span class="change-indicator absolute w-4 h-4 flex items-center justify-center text-green-600 font-bold" title="Subiu ${change.positionsChanged} posição(ões)" aria-hidden="true">↑</span>`;
+                    } else if (change.direction === 'down') {
+                        changeIndicator = `<span class="change-indicator absolute w-4 h-4 flex items-center justify-center text-red-600 font-bold" title="Desceu ${change.positionsChanged} posição(ões)" aria-hidden="true">↓</span>`;
+                    } else if (change.direction === 'none') {
+                        changeIndicator = `<span class="change-indicator absolute w-4 h-4 flex items-center justify-center text-gray-400 font-bold" title="Manteve a posição" aria-hidden="true">-</span>`;
+                    }
+                }
+
+                // Fixed columns: position, team (logo + name), points
+                const fixedRow = document.createElement('tr');
+                fixedRow.classList.add('h-12', 'border-b', 'grid', 'grid-cols-[15%_70%_15%]');
+                fixedRow.innerHTML = `
+                    <td class="flex items-center justify-center content-center relative">
+                        <span class="px-2 py-1 rounded-full text-xs font-medium bg-gray-100">${team.position}</span>
+                    </td>
+                    <td class="flex items-center content-center gap-2">
+                        <div class="relative w-2 h-6 flex items-center justify-center" aria-hidden="true">
+                            ${changeIndicator}
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="team-logo">
+                                <img class="w-7 h-7 object-contain" src="${TeamService.getTeamLogo(team)}" alt="${team.name}">
+                            </div>
+                            <div>
+                                ${team.name}
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-center content-center font-bold">
+                        ${team.points}
+                    </td>
+                `;
+                fixedBody.appendChild(fixedRow);
+
+                // Scrollable columns: games, wins, draws, losses, gp, gc, sg
+                const scrollRow = document.createElement('tr');
+                scrollRow.classList.add('h-12', 'border-b', 'grid', 'grid-cols-7');
+                scrollRow.innerHTML = `
+                    <td class="text-center content-center">${team.games || 0}</td>
+                    <td class="text-center content-center">${team.draws || 0}</td>
+                    <td class="text-center content-center">${team.victories || 0}</td>
+                    <td class="text-center content-center">${team.defeats || 0}</td>
+                    <td class="text-center content-center">${team.goal_pro || 0}</td>
+                    <td class="text-center content-center">${team.goal_against || 0}</td>
+                    <td class="text-center content-center ${team.balance_goals >= 0 ? 'text-green-600' : 'text-red-600'}">${team.balance_goals >= 0 ? '+' : ''}${team.balance_goals || 0}</td>
+                `;
+                scrollBody.appendChild(scrollRow);
+            });
+
+            // After rendering, update previous standings snapshot to the new sorted list
+            if (UIManager) {
+                UIManager._previousStandings = JSON.parse(JSON.stringify(sorted || []));
+            }
+
+            // Trigger a brief animation for visible indicators, then remove the animation class so it doesn't loop forever
+            setTimeout(() => {
+                const nodes = document.querySelectorAll('.change-indicator');
+                nodes.forEach(n => n.classList.add('animate-bounce'));
+                setTimeout(() => {
+                    nodes.forEach(n => n.classList.remove('animate-bounce'));
+                }, 1200);
+            }, 50);
+        } catch (err) {
+            console.error('Erro ao renderizar classificação:', err);
+        }
+    },
+
+    /**
+     * Renders the matches table based on the current state.matches.
+     * Handles both the case where there are no matches and the case
+     * where there are matches. If there are matches, it renders the table
+     * with input fields for score editing and attaches a simple input change
+     * handler to update state.matches when numbers change. If a MatchManager
+     * instance is available, it delegates the score update to its
+     * updateMatchScore method. Otherwise, it updates the state.matches object
+     * directly.
+     * @public
+     */
+    renderMatches() {
+        try {
+            const list = document.getElementById('matches-list');
+            if (!list) return;
+            const matches = (state && state.matches) || [];
+            if (!matches || matches.length === 0) {
+                UIRenderer.renderEmptyMatches();
+                list.innerHTML = UIRenderer.renderEmptyMatches();
+                return;
+            }
+            list.innerHTML = matches.map(m => UIRenderer.renderMatchCard(m)).join('');
+
+            // attach simple input change handler: update state when numbers change
+            const inputs = list.querySelectorAll('.match-input');
+            inputs.forEach(inp => {
+                inp.addEventListener('change', (e) => {
+                    const id = e.target.getAttribute('data-match-id');
+                    const field = e.target.getAttribute('data-field');
+                    const raw = e.target.value;
+                    let value;
+                    if (raw === '' || raw === null) {
+                        value = ""; // preserve empty state
+                    } else {
+                        const n = parseInt(raw, 10);
+                        value = Number.isNaN(n) ? "" : n;
+                    }
+                    // delegate to MatchManager when available
+                    if (MatchManager && typeof MatchManager.updateMatchScore === 'function') {
+                        MatchManager.updateMatchScore(id, field, value);
+                    } else if (state && state.matches) {
+                        const match = state.matches.find(m => String(m.id) === String(id));
+                        if (match && field) {
+                            match[field] = value;
+                        }
+                    }
+                });
+            });
+        } catch (err) {
+            console.error('Erro ao renderizar partidas:', err);
+        }
     }
 };
