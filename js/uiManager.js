@@ -137,10 +137,10 @@ export const UIManager = {
 		if (elements.prevRoundBtn) elements.prevRoundBtn.disabled = state.currentRound <= min;
 		if (elements.nextRoundBtn) elements.nextRoundBtn.disabled = state.currentRound >= max;
 
-		// Retrieve and update the round date for the new round
-		if (elements.roundDate) {
-			elements.roundDate.textContent = state.allMatches[state.currentRound].date || '';
-		}
+		// Retrieve and update the round date for the new round and keep state in sync
+		const newDate = (state.allMatches[state.currentRound] && state.allMatches[state.currentRound].date) || '';
+		state.currentRoundDate = newDate;
+		if (elements.roundDate) elements.roundDate.textContent = state.currentRoundDate;
 
 		UIManager.renderMatches();
 	}
