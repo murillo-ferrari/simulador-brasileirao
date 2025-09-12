@@ -1,0 +1,22 @@
+[
+  { "id": 1, "name": "Fluminense", "acronym": "FLU" },
+  { "id": 2, "name": "Atlético-MG", "acronym": "CAM" },
+  { "id": 3, "name": "Grêmio", "acronym": "GRE" },
+  { "id": 4, "name": "Palmeiras", "acronym": "PAL" },
+  { "id": 5, "name": "Botafogo", "acronym": "BOT" },
+  { "id": 6, "name": "Cruzeiro", "acronym": "CRU" },
+  { "id": 7, "name": "São Paulo", "acronym": "SAO" },
+  { "id": 8, "name": "Bahia", "acronym": "BAH" },
+  { "id": 9, "name": "Sport", "acronym": "SPT" },
+  { "id": 10, "name": "Corinthians", "acronym": "COR" },
+  { "id": 11, "name": "Vasco", "acronym": "VAS" },
+  { "id": 12, "name": "Vitória", "acronym": "VIT" },
+  { "id": 13, "name": "Flamengo", "acronym": "FLA" },
+  { "id": 14, "name": "Ceará", "acronym": "CEA" },
+  { "id": 15, "name": "Fortaleza", "acronym": "FOR" },
+  { "id": 16, "name": "Juventude", "acronym": "JUV" },
+  { "id": 17, "name": "Bragantino", "acronym": "RBB" },
+  { "id": 18, "name": "Mirassol", "acronym": "MIR" },
+  { "id": 19, "name": "Internacional", "acronym": "INT" },
+  { "id": 20, "name": "Santos", "acronym": "SAN" }
+]

@@ -3,13 +3,13 @@
     "date": "23/07 ou 24/07",
     "matches": [
       { "id": 1, "homeTeam": { "id": 1, "name": "Fluminense" }, "awayTeam": { "id": 4, "name": "Palmeiras" } },
-      { "id": 2, "homeTeam": { "id": 11, "name": "Vasco da Gama" }, "awayTeam": { "id": 8, "name": "Bahia" } },
+      { "id": 2, "homeTeam": { "id": 11, "name": "Vasco" }, "awayTeam": { "id": 8, "name": "Bahia" } },
       { "id": 3, "homeTeam": { "id": 10, "name": "Corinthians" }, "awayTeam": { "id": 6, "name": "Cruzeiro" } },
       { "id": 4, "homeTeam": { "id": 20, "name": "Santos" }, "awayTeam": { "id": 19, "name": "Internacional" } },
-      { "id": 5, "homeTeam": { "id": 17, "name": "RB Bragantino" }, "awayTeam": { "id": 13, "name": "Flamengo" } },
+      { "id": 5, "homeTeam": { "id": 17, "name": "Bragantino" }, "awayTeam": { "id": 13, "name": "Flamengo" } },
       { "id": 6, "homeTeam": { "id": 2, "name": "Atlético-MG" }, "awayTeam": { "id": 15, "name": "Fortaleza" } },
       { "id": 7, "homeTeam": { "id": 3, "name": "Grêmio" }, "awayTeam": { "id": 5, "name": "Botafogo" } },
-      { "id": 8, "homeTeam": { "id": 12, "name": "Vitória" }, "awayTeam": { "id": 9, "name": "Recife" } },
+      { "id": 8, "homeTeam": { "id": 12, "name": "Vitória" }, "awayTeam": { "id": 9, "name": "Sport" } },
       { "id": 9, "homeTeam": { "id": 14, "name": "Ceará" }, "awayTeam": { "id": 18, "name": "Mirassol" } },
       { "id": 10, "homeTeam": { "id": 16, "name": "Juventude" }, "awayTeam": { "id": 7, "name": "São Paulo" } }
     ]
@@ -23,10 +23,10 @@
             { "id": 14, "homeTeam": { "id": 7, "name": "São Paulo" }, "awayTeam": { "id": 1, "name": "Fluminense" } },
             { "id": 15, "homeTeam": { "id": 18, "name": "Mirassol" }, "awayTeam": { "id": 12, "name": "Vitória" } },
             { "id": 16, "homeTeam": { "id": 6, "name": "Cruzeiro" }, "awayTeam": { "id": 14, "name": "Ceará" } },
-            { "id": 17, "homeTeam": { "id": 19, "name": "Internacional" }, "awayTeam": { "id": 11, "name": "Vasco da Gama" } },
+            { "id": 17, "homeTeam": { "id": 19, "name": "Internacional" }, "awayTeam": { "id": 11, "name": "Vasco" } },
             { "id": 18, "homeTeam": { "id": 8, "name": "Bahia" }, "awayTeam": { "id": 16, "name": "Juventude" } },
-            { "id": 19, "homeTeam": { "id": 15, "name": "Fortaleza" }, "awayTeam": { "id": 17, "name": "RB Bragantino" } },
-            { "id": 20, "homeTeam": { "id": 9, "name": "Recife" }, "awayTeam": { "id": 20, "name": "Santos" } }
+            { "id": 19, "homeTeam": { "id": 15, "name": "Fortaleza" }, "awayTeam": { "id": 17, "name": "Bragantino" } },
+            { "id": 20, "homeTeam": { "id": 9, "name": "Sport" }, "awayTeam": { "id": 20, "name": "Santos" } }
         ]
     },
     "18": {
@@ -36,24 +36,24 @@
             { "id": 22, "homeTeam": { "id": 5, "name": "Botafogo" }, "awayTeam": { "id": 6, "name": "Cruzeiro" } },
             { "id": 23, "homeTeam": { "id": 10, "name": "Corinthians" }, "awayTeam": { "id": 15, "name": "Fortaleza" } },
             { "id": 24, "homeTeam": { "id": 20, "name": "Santos" }, "awayTeam": { "id": 16, "name": "Juventude" } },
-            { "id": 25, "homeTeam": { "id": 18, "name": "Mirassol" }, "awayTeam": { "id": 11, "name": "Vasco da Gama" } },
-            { "id": 26, "homeTeam": { "id": 2, "name": "Atlético-MG" }, "awayTeam": { "id": 17, "name": "RB Bragantino" } },
+            { "id": 25, "homeTeam": { "id": 18, "name": "Mirassol" }, "awayTeam": { "id": 11, "name": "Vasco" } },
+            { "id": 26, "homeTeam": { "id": 2, "name": "Atlético-MG" }, "awayTeam": { "id": 17, "name": "Bragantino" } },
             { "id": 27, "homeTeam": { "id": 19, "name": "Internacional" }, "awayTeam": { "id": 7, "name": "São Paulo" } },
             { "id": 28, "homeTeam": { "id": 12, "name": "Vitória" }, "awayTeam": { "id": 4, "name": "Palmeiras" } },
             { "id": 29, "homeTeam": { "id": 14, "name": "Ceará" }, "awayTeam": { "id": 13, "name": "Flamengo" } },
-            { "id": 30, "homeTeam": { "id": 9, "name": "Recife" }, "awayTeam": { "id": 8, "name": "Bahia" } }
+            { "id": 30, "homeTeam": { "id": 9, "name": "Sport" }, "awayTeam": { "id": 8, "name": "Bahia" } }
         ]
     },
     "19": {
         "date": "09/08, 10/08 ou 11/08",
         "matches": [
             { "id": 31, "homeTeam": { "id": 13, "name": "Flamengo" }, "awayTeam": { "id": 18, "name": "Mirassol" } },
-            { "id": 32, "homeTeam": { "id": 11, "name": "Vasco da Gama" }, "awayTeam": { "id": 2, "name": "Atlético-MG" } },
+            { "id": 32, "homeTeam": { "id": 11, "name": "Vasco" }, "awayTeam": { "id": 2, "name": "Atlético-MG" } },
             { "id": 33, "homeTeam": { "id": 4, "name": "Palmeiras" }, "awayTeam": { "id": 14, "name": "Ceará" } },
             { "id": 34, "homeTeam": { "id": 7, "name": "São Paulo" }, "awayTeam": { "id": 12, "name": "Vitória" } },
-            { "id": 35, "homeTeam": { "id": 17, "name": "RB Bragantino" }, "awayTeam": { "id": 19, "name": "Internacional" } },
+            { "id": 35, "homeTeam": { "id": 17, "name": "Bragantino" }, "awayTeam": { "id": 19, "name": "Internacional" } },
             { "id": 36, "homeTeam": { "id": 6, "name": "Cruzeiro" }, "awayTeam": { "id": 20, "name": "Santos" } },
-            { "id": 37, "homeTeam": { "id": 3, "name": "Grêmio" }, "awayTeam": { "id": 9, "name": "Recife" } },
+            { "id": 37, "homeTeam": { "id": 3, "name": "Grêmio" }, "awayTeam": { "id": 9, "name": "Sport" } },
             { "id": 38, "homeTeam": { "id": 8, "name": "Bahia" }, "awayTeam": { "id": 1, "name": "Fluminense" } },
             { "id": 39, "homeTeam": { "id": 15, "name": "Fortaleza" }, "awayTeam": { "id": 5, "name": "Botafogo" } },
             { "id": 40, "homeTeam": { "id": 16, "name": "Juventude" }, "awayTeam": { "id": 10, "name": "Corinthians" } }
@@ -65,23 +65,23 @@
             { "id": 41, "homeTeam": { "id": 1, "name": "Fluminense" }, "awayTeam": { "id": 15, "name": "Fortaleza" } },
             { "id": 42, "homeTeam": { "id": 5, "name": "Botafogo" }, "awayTeam": { "id": 4, "name": "Palmeiras" } },
             { "id": 43, "homeTeam": { "id": 10, "name": "Corinthians" }, "awayTeam": { "id": 8, "name": "Bahia" } },
-            { "id": 44, "homeTeam": { "id": 20, "name": "Santos" }, "awayTeam": { "id": 11, "name": "Vasco da Gama" } },
+            { "id": 44, "homeTeam": { "id": 20, "name": "Santos" }, "awayTeam": { "id": 11, "name": "Vasco" } },
             { "id": 45, "homeTeam": { "id": 18, "name": "Mirassol" }, "awayTeam": { "id": 6, "name": "Cruzeiro" } },
             { "id": 46, "homeTeam": { "id": 2, "name": "Atlético-MG" }, "awayTeam": { "id": 3, "name": "Grêmio" } },
             { "id": 47, "homeTeam": { "id": 19, "name": "Internacional" }, "awayTeam": { "id": 13, "name": "Flamengo" } },
             { "id": 48, "homeTeam": { "id": 12, "name": "Vitória" }, "awayTeam": { "id": 16, "name": "Juventude" } },
-            { "id": 49, "homeTeam": { "id": 14, "name": "Ceará" }, "awayTeam": { "id": 17, "name": "RB Bragantino" } },
-            { "id": 50, "homeTeam": { "id": 9, "name": "Recife" }, "awayTeam": { "id": 7, "name": "São Paulo" } }
+            { "id": 49, "homeTeam": { "id": 14, "name": "Ceará" }, "awayTeam": { "id": 17, "name": "Bragantino" } },
+            { "id": 50, "homeTeam": { "id": 9, "name": "Sport" }, "awayTeam": { "id": 7, "name": "São Paulo" } }
         ]
     },
     "21": {
         "date": "23/08, 24/08 ou 25/08",
         "matches": [
             { "id": 51, "homeTeam": { "id": 13, "name": "Flamengo" }, "awayTeam": { "id": 12, "name": "Vitória" } },
-            { "id": 52, "homeTeam": { "id": 11, "name": "Vasco da Gama" }, "awayTeam": { "id": 10, "name": "Corinthians" } },
-            { "id": 53, "homeTeam": { "id": 4, "name": "Palmeiras" }, "awayTeam": { "id": 9, "name": "Recife" } },
+            { "id": 52, "homeTeam": { "id": 11, "name": "Vasco" }, "awayTeam": { "id": 10, "name": "Corinthians" } },
+            { "id": 53, "homeTeam": { "id": 4, "name": "Palmeiras" }, "awayTeam": { "id": 9, "name": "Sport" } },
             { "id": 54, "homeTeam": { "id": 7, "name": "São Paulo" }, "awayTeam": { "id": 2, "name": "Atlético-MG" } },
-            { "id": 55, "homeTeam": { "id": 17, "name": "RB Bragantino" }, "awayTeam": { "id": 1, "name": "Fluminense" } },
+            { "id": 55, "homeTeam": { "id": 17, "name": "Bragantino" }, "awayTeam": { "id": 1, "name": "Fluminense" } },
             { "id": 56, "homeTeam": { "id": 6, "name": "Cruzeiro" }, "awayTeam": { "id": 19, "name": "Internacional" } },
             { "id": 57, "homeTeam": { "id": 3, "name": "Grêmio" }, "awayTeam": { "id": 14, "name": "Ceará" } },
             { "id": 58, "homeTeam": { "id": 8, "name": "Bahia" }, "awayTeam": { "id": 20, "name": "Santos" } },
@@ -93,7 +93,7 @@
         "date": "30/08, 31/08 ou 01/09",
         "matches": [
             { "id": 61, "homeTeam": { "id": 13, "name": "Flamengo" }, "awayTeam": { "id": 3, "name": "Grêmio" } },
-            { "id": 62, "homeTeam": { "id": 5, "name": "Botafogo" }, "awayTeam": { "id": 17, "name": "RB Bragantino" } },
+            { "id": 62, "homeTeam": { "id": 5, "name": "Botafogo" }, "awayTeam": { "id": 17, "name": "Bragantino" } },
             { "id": 63, "homeTeam": { "id": 10, "name": "Corinthians" }, "awayTeam": { "id": 4, "name": "Palmeiras" } },
             { "id": 64, "homeTeam": { "id": 20, "name": "Santos" }, "awayTeam": { "id": 1, "name": "Fluminense" } },
             { "id": 65, "homeTeam": { "id": 18, "name": "Mirassol" }, "awayTeam": { "id": 8, "name": "Bahia" } },
@@ -101,17 +101,17 @@
             { "id": 67, "homeTeam": { "id": 19, "name": "Internacional" }, "awayTeam": { "id": 15, "name": "Fortaleza" } },
             { "id": 68, "homeTeam": { "id": 12, "name": "Vitória" }, "awayTeam": { "id": 2, "name": "Atlético-MG" } },
             { "id": 69, "homeTeam": { "id": 14, "name": "Ceará" }, "awayTeam": { "id": 16, "name": "Juventude" } },
-            { "id": 70, "homeTeam": { "id": 9, "name": "Recife" }, "awayTeam": { "id": 11, "name": "Vasco da Gama" } }
+            { "id": 70, "homeTeam": { "id": 9, "name": "Sport" }, "awayTeam": { "id": 11, "name": "Vasco" } }
         ]
     },
     "23": {
         "date": "13/09, 14/09 ou 15/09",
         "matches": [
             { "id": 71, "homeTeam": { "id": 1, "name": "Fluminense" }, "awayTeam": { "id": 10, "name": "Corinthians" } },
-            { "id": 72, "homeTeam": { "id": 11, "name": "Vasco da Gama" }, "awayTeam": { "id": 14, "name": "Ceará" } },
+            { "id": 72, "homeTeam": { "id": 11, "name": "Vasco" }, "awayTeam": { "id": 14, "name": "Ceará" } },
             { "id": 73, "homeTeam": { "id": 4, "name": "Palmeiras" }, "awayTeam": { "id": 19, "name": "Internacional" } },
             { "id": 74, "homeTeam": { "id": 7, "name": "São Paulo" }, "awayTeam": { "id": 5, "name": "Botafogo" } },
-            { "id": 75, "homeTeam": { "id": 17, "name": "RB Bragantino" }, "awayTeam": { "id": 9, "name": "Recife" } },
+            { "id": 75, "homeTeam": { "id": 17, "name": "Bragantino" }, "awayTeam": { "id": 9, "name": "Sport" } },
             { "id": 76, "homeTeam": { "id": 2, "name": "Atlético-MG" }, "awayTeam": { "id": 20, "name": "Santos" } },
             { "id": 77, "homeTeam": { "id": 3, "name": "Grêmio" }, "awayTeam": { "id": 18, "name": "Mirassol" } },
             { "id": 78, "homeTeam": { "id": 8, "name": "Bahia" }, "awayTeam": { "id": 6, "name": "Cruzeiro" } },
@@ -122,30 +122,30 @@
     "24": {
         "date": "20/09, 21/09 ou 22/09",
         "matches": [
-            { "id": 81, "homeTeam": { "id": 13, "name": "Flamengo" }, "awayTeam": { "id": 11, "name": "Vasco da Gama" } },
+            { "id": 81, "homeTeam": { "id": 13, "name": "Flamengo" }, "awayTeam": { "id": 11, "name": "Vasco" } },
             { "id": 82, "homeTeam": { "id": 5, "name": "Botafogo" }, "awayTeam": { "id": 2, "name": "Atlético-MG" } },
             { "id": 83, "homeTeam": { "id": 4, "name": "Palmeiras" }, "awayTeam": { "id": 15, "name": "Fortaleza" } },
             { "id": 84, "homeTeam": { "id": 20, "name": "Santos" }, "awayTeam": { "id": 7, "name": "São Paulo" } },
             { "id": 85, "homeTeam": { "id": 18, "name": "Mirassol" }, "awayTeam": { "id": 16, "name": "Juventude" } },
-            { "id": 86, "homeTeam": { "id": 6, "name": "Cruzeiro" }, "awayTeam": { "id": 17, "name": "RB Bragantino" } },
+            { "id": 86, "homeTeam": { "id": 6, "name": "Cruzeiro" }, "awayTeam": { "id": 17, "name": "Bragantino" } },
             { "id": 87, "homeTeam": { "id": 19, "name": "Internacional" }, "awayTeam": { "id": 3, "name": "Grêmio" } },
             { "id": 88, "homeTeam": { "id": 12, "name": "Vitória" }, "awayTeam": { "id": 1, "name": "Fluminense" } },
             { "id": 89, "homeTeam": { "id": 14, "name": "Ceará" }, "awayTeam": { "id": 8, "name": "Bahia" } },
-            { "id": 90, "homeTeam": { "id": 9, "name": "Recife" }, "awayTeam": { "id": 10, "name": "Corinthians" } }
+            { "id": 90, "homeTeam": { "id": 9, "name": "Sport" }, "awayTeam": { "id": 10, "name": "Corinthians" } }
         ]
     },
     "25": {
         "date": "27/09, 28/09 ou 29/09",
         "matches": [
             { "id": 91, "homeTeam": { "id": 1, "name": "Fluminense" }, "awayTeam": { "id": 5, "name": "Botafogo" } },
-            { "id": 92, "homeTeam": { "id": 11, "name": "Vasco da Gama" }, "awayTeam": { "id": 6, "name": "Cruzeiro" } },
+            { "id": 92, "homeTeam": { "id": 11, "name": "Vasco" }, "awayTeam": { "id": 6, "name": "Cruzeiro" } },
             { "id": 93, "homeTeam": { "id": 10, "name": "Corinthians" }, "awayTeam": { "id": 13, "name": "Flamengo" } },
             { "id": 94, "homeTeam": { "id": 7, "name": "São Paulo" }, "awayTeam": { "id": 14, "name": "Ceará" } },
-            { "id": 95, "homeTeam": { "id": 17, "name": "RB Bragantino" }, "awayTeam": { "id": 20, "name": "Santos" } },
+            { "id": 95, "homeTeam": { "id": 17, "name": "Bragantino" }, "awayTeam": { "id": 20, "name": "Santos" } },
             { "id": 96, "homeTeam": { "id": 2, "name": "Atlético-MG" }, "awayTeam": { "id": 18, "name": "Mirassol" } },
             { "id": 97, "homeTeam": { "id": 3, "name": "Grêmio" }, "awayTeam": { "id": 12, "name": "Vitória" } },
             { "id": 98, "homeTeam": { "id": 8, "name": "Bahia" }, "awayTeam": { "id": 4, "name": "Palmeiras" } },
-            { "id": 99, "homeTeam": { "id": 15, "name": "Fortaleza" }, "awayTeam": { "id": 9, "name": "Recife" } },
+            { "id": 99, "homeTeam": { "id": 15, "name": "Fortaleza" }, "awayTeam": { "id": 9, "name": "Sport" } },
             { "id": 100, "homeTeam": { "id": 16, "name": "Juventude" }, "awayTeam": { "id": 19, "name": "Internacional" } }
         ]
     },
@@ -154,25 +154,25 @@
         "matches": [
             { "id": 101, "homeTeam": { "id": 13, "name": "Flamengo" }, "awayTeam": { "id": 6, "name": "Cruzeiro" } },
             { "id": 102, "homeTeam": { "id": 5, "name": "Botafogo" }, "awayTeam": { "id": 8, "name": "Bahia" } },
-            { "id": 103, "homeTeam": { "id": 4, "name": "Palmeiras" }, "awayTeam": { "id": 11, "name": "Vasco da Gama" } },
+            { "id": 103, "homeTeam": { "id": 4, "name": "Palmeiras" }, "awayTeam": { "id": 11, "name": "Vasco" } },
             { "id": 104, "homeTeam": { "id": 20, "name": "Santos" }, "awayTeam": { "id": 3, "name": "Grêmio" } },
-            { "id": 105, "homeTeam": { "id": 18, "name": "Mirassol" }, "awayTeam": { "id": 17, "name": "RB Bragantino" } },
+            { "id": 105, "homeTeam": { "id": 18, "name": "Mirassol" }, "awayTeam": { "id": 17, "name": "Bragantino" } },
             { "id": 106, "homeTeam": { "id": 2, "name": "Atlético-MG" }, "awayTeam": { "id": 16, "name": "Juventude" } },
             { "id": 107, "homeTeam": { "id": 19, "name": "Internacional" }, "awayTeam": { "id": 10, "name": "Corinthians" } },
             { "id": 108, "homeTeam": { "id": 12, "name": "Vitória" }, "awayTeam": { "id": 14, "name": "Ceará" } },
             { "id": 109, "homeTeam": { "id": 15, "name": "Fortaleza" }, "awayTeam": { "id": 7, "name": "São Paulo" } },
-            { "id": 110, "homeTeam": { "id": 9, "name": "Recife" }, "awayTeam": { "id": 1, "name": "Fluminense" } }
+            { "id": 110, "homeTeam": { "id": 9, "name": "Sport" }, "awayTeam": { "id": 1, "name": "Fluminense" } }
         ]
     },
     "27": {
         "date": "16/10 ou 17/10",
         "matches": [
             { "id": 111, "homeTeam": { "id": 1, "name": "Fluminense" }, "awayTeam": { "id": 2, "name": "Atlético-MG" } },
-            { "id": 112, "homeTeam": { "id": 11, "name": "Vasco da Gama" }, "awayTeam": { "id": 12, "name": "Vitória" } },
+            { "id": 112, "homeTeam": { "id": 11, "name": "Vasco" }, "awayTeam": { "id": 12, "name": "Vitória" } },
             { "id": 113, "homeTeam": { "id": 10, "name": "Corinthians" }, "awayTeam": { "id": 18, "name": "Mirassol" } },
             { "id": 114, "homeTeam": { "id": 7, "name": "São Paulo" }, "awayTeam": { "id": 4, "name": "Palmeiras" } },
-            { "id": 115, "homeTeam": { "id": 17, "name": "RB Bragantino" }, "awayTeam": { "id": 3, "name": "Grêmio" } },
-            { "id": 116, "homeTeam": { "id": 6, "name": "Cruzeiro" }, "awayTeam": { "id": 9, "name": "Recife" } },
+            { "id": 115, "homeTeam": { "id": 17, "name": "Bragantino" }, "awayTeam": { "id": 3, "name": "Grêmio" } },
+            { "id": 116, "homeTeam": { "id": 6, "name": "Cruzeiro" }, "awayTeam": { "id": 9, "name": "Sport" } },
             { "id": 117, "homeTeam": { "id": 19, "name": "Internacional" }, "awayTeam": { "id": 5, "name": "Botafogo" } },
             { "id": 118, "homeTeam": { "id": 8, "name": "Bahia" }, "awayTeam": { "id": 13, "name": "Flamengo" } },
             { "id": 119, "homeTeam": { "id": 14, "name": "Ceará" }, "awayTeam": { "id": 20, "name": "Santos" } },
@@ -184,29 +184,29 @@
         "matches": [
             { "id": 121, "homeTeam": { "id": 1, "name": "Fluminense" }, "awayTeam": { "id": 16, "name": "Juventude" } },
             { "id": 122, "homeTeam": { "id": 5, "name": "Botafogo" }, "awayTeam": { "id": 13, "name": "Flamengo" } },
-            { "id": 123, "homeTeam": { "id": 4, "name":  "Palmeiras" }, "awayTeam":  { "id": 17, "name":  "RB Bragantino" } },
+            { "id": 123, "homeTeam": { "id": 4, "name":  "Palmeiras" }, "awayTeam":  { "id": 17, "name":  "Bragantino" } },
             { "id": 124, "homeTeam": { "id": 20, "name":  "Santos" }, "awayTeam":  { "id": 10, "name":  "Corinthians" } },
             { "id": 125, "homeTeam": { "id": 18, "name":  "Mirassol" }, "awayTeam":  { "id": 7, "name":  "São Paulo" } },
             { "id": 126, "homeTeam": { "id": 6, "name":  "Cruzeiro" }, "awayTeam":  { "id": 15, "name":  "Fortaleza" } },
             { "id": 127, "homeTeam": { "id": 19, "name":  "Internacional" }, "awayTeam":  { "id": 12, "name":  "Vitória" } },
             { "id": 128, "homeTeam": { "id": 8, "name":  "Bahia" }, "awayTeam":  { "id": 2, "name":  "Atlético-MG" } },
             { "id": 129, "homeTeam": { "id": 14, "name":  "Ceará" }, "awayTeam":  { "id": 3, "name":  "Grêmio" } },
-            { "id": 130, "homeTeam": { "id": 9, "name":  "Recife" }, "awayTeam":  { "id": 11, "name":  "Vasco da Gama" } }
+            { "id": 130, "homeTeam": { "id": 9, "name":  "Sport" }, "awayTeam":  { "id": 11, "name":  "Vasco" } }
         ]
     },
     "29": {
         "date": "05/11 ou 06/11",
         "matches":  [
             { "id": 131, "homeTeam": { "id": 13, "name":  "Flamengo" }, "awayTeam":  { "id": 4, "name":  "Palmeiras" } },
-            { "id": 132, "homeTeam": { "id": 11, "name":  "Vasco da Gama" }, "awayTeam":  { "id": 1, "name":  "Fluminense" } },
+            { "id": 132, "homeTeam": { "id": 11, "name":  "Vasco" }, "awayTeam":  { "id": 1, "name":  "Fluminense" } },
             { "id": 133, "homeTeam": { "id": 10, "name":  "Corinthians" }, "awayTeam":  { "id": 2, "name":  "Atlético-MG" } },
             { "id": 134, "homeTeam": { "id": 20, "name":  "Santos" }, "awayTeam":  { "id": 12, "name":  "Vitória" } },
             { "id": 135, "homeTeam": { "id": 18, "name":  "Mirassol" }, "awayTeam":  { "id": 7, "name":  "São Paulo" } },
             { "id": 136, "homeTeam": { "id": 6, "name":  "Cruzeiro" }, "awayTeam":  { "id": 15, "name":  "Fortaleza" } },
-            { "id": 137, "homeTeam": { "id": 19, "name":  "Internacional" }, "awayTeam":  { "id": 9, "name":  "Recife" } },
+            { "id": 137, "homeTeam": { "id": 19, "name":  "Internacional" }, "awayTeam":  { "id": 9, "name":  "Sport" } },
             { "id": 138, "homeTeam": { "id": 8, "name":  "Bahia" }, "awayTeam":  { "id": 3, "name":  "Grêmio" } },
             { "id": 139, "homeTeam": { "id": 14, "name":  "Ceará" }, "awayTeam":  { "id": 5, "name":  "Botafogo" } },
-            { "id": 140, "homeTeam": { "id": 16, "name":  "Juventude" }, "awayTeam":  { "id": 17, "name":  "RB Bragantino" } }
+            { "id": 140, "homeTeam": { "id": 16, "name":  "Juventude" }, "awayTeam":  { "id": 17, "name":  "Bragantino" } }
         ]
     },
     "30": {
@@ -216,25 +216,25 @@
             { "id": 142, "homeTeam": { "id": 5, "name":  "Botafogo" }, "awayTeam":  { "id": 20, "name":  "Santos" } },
             { "id": 143, "homeTeam": { "id": 4, "name":  "Palmeiras" }, "awayTeam":  { "id": 6, "name":  "Cruzeiro" } },
             { "id": 144, "homeTeam": { "id": 7, "name":  "São Paulo" }, "awayTeam":  { "id": 8, "name":  "Bahia" } },
-            { "id": 145, "homeTeam": { "id": 17, "name":  "RB Bragantino" }, "awayTeam":  { "id": 11, "name":  "Vasco da Gama" } },
+            { "id": 145, "homeTeam": { "id": 17, "name":  "Bragantino" }, "awayTeam":  { "id": 11, "name":  "Vasco" } },
             { "id": 146, "homeTeam": { "id": 2, "name":  "Atlético-MG" }, "awayTeam":  { "id": 14, "name":  "Ceará" } },
             { "id": 147, "homeTeam": { "id": 3, "name":  "Grêmio" }, "awayTeam":  { "id": 16, "name":  "Juventude" } },
             { "id": 148, "homeTeam": { "id": 12, "name":  "Vitória" }, "awayTeam":  { "id": 10, "name":  "Corinthians" } },
             { "id": 149, "homeTeam": { "id": 15, "name":  "Fortaleza" }, "awayTeam":  { "id": 13, "name":  "Flamengo" } },
-            { "id": 150, "homeTeam": { "id": 9, "name":  "Recife" }, "awayTeam":  { "id": 18, "name":  "Mirassol" } }
+            { "id": 150, "homeTeam": { "id": 9, "name":  "Sport" }, "awayTeam":  { "id": 18, "name":  "Mirassol" } }
         ]
     },
     "31": {
         "date": "22/11, 23/11 ou 24/11",
         "matches":  [
-            { "id": 151, "homeTeam": { "id": 13, "name":  "Flamengo" }, "awayTeam":  { "id": 9, "name":  "Recife" } },
-            { "id": 152, "homeTeam": { "id": 11, "name":  "Vasco da Gama" }, "awayTeam":  { "id": 7, "name":  "São Paulo" } },
+            { "id": 151, "homeTeam": { "id": 13, "name":  "Flamengo" }, "awayTeam":  { "id": 9, "name":  "Sport" } },
+            { "id": 152, "homeTeam": { "id": 11, "name":  "Vasco" }, "awayTeam":  { "id": 7, "name":  "São Paulo" } },
             { "id": 153, "homeTeam": { "id": 10, "name":  "Corinthians" }, "awayTeam":  { "id": 3, "name":  "Grêmio" } },
             { "id": 154, "homeTeam": { "id": 20, "name":  "Santos" }, "awayTeam":  { "id": 15, "name":  "Fortaleza" } },
             { "id": 155, "homeTeam": { "id": 18, "name":  "Mirassol" }, "awayTeam":  { "id": 5, "name":  "Botafogo" } },
             { "id": 156, "homeTeam": { "id": 6, "name":  "Cruzeiro" }, "awayTeam":  { "id": 12, "name":  "Vitória" } },
             { "id": 157, "homeTeam": { "id": 19, "name":  "Internacional" }, "awayTeam":  { "id": 2, "name":  "Atlético-MG" } },
-            { "id": 158, "homeTeam": { "id": 8, "name":  "Bahia" }, "awayTeam":  { "id": 17, "name":  "RB Bragantino" } },
+            { "id": 158, "homeTeam": { "id": 8, "name":  "Bahia" }, "awayTeam":  { "id": 17, "name":  "Bragantino" } },
             { "id": 159, "homeTeam": { "id": 14, "name":  "Ceará" }, "awayTeam":  { "id": 1, "name":  "Fluminense" } },
             { "id": 160, "homeTeam": { "id": 16, "name":  "Juventude" }, "awayTeam":  { "id": 4, "name":  "Palmeiras" } }
         ]
@@ -243,42 +243,42 @@
         "date": "29/11, 30/11 ou 01/12",
         "matches":  [
             { "id": 161, "homeTeam": { "id": 1, "name":  "Fluminense" }, "awayTeam":  { "id": 18, "name":  "Mirassol" } },
-            { "id": 162, "homeTeam": { "id": 5, "name":  "Botafogo" }, "awayTeam":  { "id": 11, "name":  "Vasco da Gama" } },
+            { "id": 162, "homeTeam": { "id": 5, "name":  "Botafogo" }, "awayTeam":  { "id": 11, "name":  "Vasco" } },
             { "id": 163, "homeTeam": { "id": 4, "name":  "Palmeiras" }, "awayTeam":  { "id": 20, "name":  "Santos" } },
             { "id": 164, "homeTeam": { "id": 7, "name":  "São Paulo" }, "awayTeam":  { "id": 13, "name":  "Flamengo" } },
-            { "id": 165, "homeTeam": { "id": 17, "name":  "RB Bragantino" }, "awayTeam":  { "id": 10, "name":  "Corinthians" } },
+            { "id": 165, "homeTeam": { "id": 17, "name":  "Bragantino" }, "awayTeam":  { "id": 10, "name":  "Corinthians" } },
             { "id": 166, "homeTeam": { "id": 2, "name":  "Atlético-MG" }, "awayTeam":  { "id": 8, "name":  "Bahia" } },
             { "id": 167, "homeTeam": { "id": 3, "name":  "Grêmio" }, "awayTeam":  { "id": 6, "name":  "Cruzeiro" } },
             { "id": 168, "homeTeam": { "id": 12, "name":  "Vitória" }, "awayTeam":  { "id": 19, "name":  "Internacional" } },
             { "id": 169, "homeTeam": { "id": 15, "name":  "Fortaleza" }, "awayTeam":  { "id": 14, "name":  "Ceará" } },
-            { "id": 170, "homeTeam": { "id": 9, "name":  "Recife" }, "awayTeam":  { "id": 16, "name":  "Juventude" } }
+            { "id": 170, "homeTeam": { "id": 9, "name":  "Sport" }, "awayTeam":  { "id": 16, "name":  "Juventude" } }
         ]
     },
     "33": {
         "date": "03/12 ou 04/12",
         "matches":  [
             { "id": 171, "homeTeam": { "id": 13, "name":  "Flamengo" }, "awayTeam":  { "id": 20, "name":  "Santos" } },
-            { "id": 172, "homeTeam": { "id": 11, "name":  "Vasco da Gama" }, "awayTeam":  { "id": 16, "name":  "Juventude" } },
+            { "id": 172, "homeTeam": { "id": 11, "name":  "Vasco" }, "awayTeam":  { "id": 16, "name":  "Juventude" } },
             { "id": 173, "homeTeam": { "id": 10, "name":  "Corinthians" }, "awayTeam":  { "id": 14, "name":  "Ceará" } },
-            { "id": 174, "homeTeam": { "id": 7, "name":  "São Paulo" }, "awayTeam":  { "id": 17, "name":  "RB Bragantino" } },
+            { "id": 174, "homeTeam": { "id": 7, "name":  "São Paulo" }, "awayTeam":  { "id": 17, "name":  "Bragantino" } },
             { "id": 175, "homeTeam": { "id": 18, "name":  "Mirassol" }, "awayTeam":  { "id": 4, "name":  "Palmeiras" } },
             { "id": 176, "homeTeam": { "id": 6, "name":  "Cruzeiro" }, "awayTeam":  { "id": 1, "name":  "Fluminense" } },
             { "id": 177, "homeTeam": { "id": 19, "name":  "Internacional" }, "awayTeam":  { "id": 8, "name":  "Bahia" } },
             { "id": 178, "homeTeam": { "id": 12, "name":  "Vitória" }, "awayTeam":  { "id": 5, "name":  "Botafogo" } },
             { "id": 179, "homeTeam": { "id": 15, "name":  "Fortaleza" }, "awayTeam":  { "id": 3, "name":  "Grêmio" } },
-            { "id": 180, "homeTeam": { "id": 9, "name":  "Recife" }, "awayTeam":  { "id": 2, "name":  "Atlético-MG" } }
+            { "id": 180, "homeTeam": { "id": 9, "name":  "Sport" }, "awayTeam":  { "id": 2, "name":  "Atlético-MG" } }
         ]
     },
     "34": {
         "date": "06/12, 07/12 ou 08/12",
         "matches":  [
             { "id": 181, "homeTeam": { "id": 1, "name":  "Fluminense" }, "awayTeam":  { "id": 13, "name":  "Flamengo" } },
-            { "id": 182, "homeTeam": { "id": 5, "name":  "Botafogo" }, "awayTeam":  { "id": 9, "name":  "Recife" } },
+            { "id": 182, "homeTeam": { "id": 5, "name":  "Botafogo" }, "awayTeam":  { "id": 9, "name":  "Sport" } },
             { "id": 183, "homeTeam": { "id": 10, "name":  "Corinthians" }, "awayTeam":  { "id": 7, "name":  "São Paulo" } },
             { "id": 184, "homeTeam": { "id": 20, "name":  "Santos" }, "awayTeam":  { "id": 18, "name":  "Mirassol" } },
-            { "id": 185, "homeTeam": { "id": 17, "name":  "RB Bragantino" }, "awayTeam":  { "id": 12, "name":  "Vitória" } },
+            { "id": 185, "homeTeam": { "id": 17, "name":  "Bragantino" }, "awayTeam":  { "id": 12, "name":  "Vitória" } },
             { "id": 186, "homeTeam": { "id": 2, "name":  "Atlético-MG" }, "awayTeam":  { "id": 4, "name":  "Palmeiras" } },
-            { "id": 187, "homeTeam": { "id": 3, "name":  "Grêmio" }, "awayTeam":  { "id": 11, "name":  "Vasco da Gama" } },
+            { "id": 187, "homeTeam": { "id": 3, "name":  "Grêmio" }, "awayTeam":  { "id": 11, "name":  "Vasco" } },
             { "id": 188, "homeTeam": { "id": 8, "name":  "Bahia" }, "awayTeam":  { "id": 15, "name":  "Fortaleza" } },
             { "id": 189, "homeTeam": { "id": 14, "name":  "Ceará" }, "awayTeam":  { "id": 19, "name":  "Internacional" } },
             { "id": 190, "homeTeam": { "id": 16, "name":  "Juventude" }, "awayTeam":  { "id": 6, "name":  "Cruzeiro" } }
@@ -287,16 +287,16 @@
     "35": {
         "date": "10/12 ou 11/12",
         "matches":  [
-            { "id": 191, "homeTeam": { "id": 13, "name":  "Flamengo" }, "awayTeam":  { "id": 17, "name":  "RB Bragantino" } },
+            { "id": 191, "homeTeam": { "id": 13, "name":  "Flamengo" }, "awayTeam":  { "id": 17, "name":  "Bragantino" } },
             { "id": 192, "homeTeam": { "id": 5, "name":  "Botafogo" }, "awayTeam":  { "id": 3, "name":  "Grêmio" } },
             { "id": 193, "homeTeam": { "id": 4, "name":  "Palmeiras" }, "awayTeam":  { "id": 1, "name":  "Fluminense" } },
             { "id": 194, "homeTeam": { "id": 7, "name":  "São Paulo" }, "awayTeam":  { "id": 16, "name":  "Juventude" } },
             { "id": 195, "homeTeam": { "id": 18, "name":  "Mirassol" }, "awayTeam":  { "id": 14, "name":  "Ceará" } },
             { "id": 196, "homeTeam": { "id": 6, "name":  "Cruzeiro" }, "awayTeam":  { "id": 10, "name":  "Corinthians" } },
             { "id": 197, "homeTeam": { "id": 19, "name":  "Internacional" }, "awayTeam":  { "id": 20, "name":  "Santos" } },
-            { "id": 198, "homeTeam": { "id": 11, "name":  "Vasco da Gama" }, "awayTeam":  { "id": 8, "name":  "Bahia" } },
+            { "id": 198, "homeTeam": { "id": 11, "name":  "Vasco" }, "awayTeam":  { "id": 8, "name":  "Bahia" } },
             { "id": 199, "homeTeam": { "id": 15, "name":  "Fortaleza" }, "awayTeam":  { "id": 2, "name":  "Atlético-MG" } },
-            { "id": 200, "homeTeam": { "id": 9, "name":  "Recife" }, "awayTeam":  { "id": 12, "name":  "Vitória" } }
+            { "id": 200, "homeTeam": { "id": 9, "name":  "Sport" }, "awayTeam":  { "id": 12, "name":  "Vitória" } }
         ]
     },
     "36": {
@@ -304,14 +304,14 @@
         "matches":  [
             { "id": 201, "homeTeam": { "id": 1, "name":  "Fluminense" }, "awayTeam":  { "id": 7, "name":  "São Paulo" } },
             { "id": 202, "homeTeam": { "id": 10, "name":  "Corinthians" }, "awayTeam":  { "id": 5, "name":  "Botafogo" } },
-            { "id": 203, "homeTeam": { "id": 20, "name":  "Santos" }, "awayTeam":  { "id": 9, "name":  "Recife" } },
-            { "id": 204, "homeTeam": { "id": 17, "name":  "RB Bragantino" }, "awayTeam":  { "id": 15, "name":  "Fortaleza" } },
+            { "id": 203, "homeTeam": { "id": 20, "name":  "Santos" }, "awayTeam":  { "id": 9, "name":  "Sport" } },
+            { "id": 204, "homeTeam": { "id": 17, "name":  "Bragantino" }, "awayTeam":  { "id": 15, "name":  "Fortaleza" } },
             { "id": 205, "homeTeam": { "id": 2, "name":  "Atlético-MG" }, "awayTeam":  { "id": 13, "name":  "Flamengo" } },
             { "id": 206, "homeTeam": { "id": 3, "name":  "Grêmio" }, "awayTeam":  { "id": 4, "name":  "Palmeiras" } },
             { "id": 207, "homeTeam": { "id": 12, "name":  "Vitória" }, "awayTeam":  { "id": 18, "name":  "Mirassol" } },
             { "id": 208, "homeTeam": { "id": 14, "name":  "Ceará" }, "awayTeam":  { "id": 6, "name":  "Cruzeiro" } },
             { "id": 209, "homeTeam": { "id": 16, "name":  "Juventude" }, "awayTeam":  { "id": 8, "name":  "Bahia" } },
-            { "id": 210, "homeTeam": { "id": 19, "name":  "Internacional" }, "awayTeam":  { "id": 11, "name":  "Vasco da Gama" } }
+            { "id": 210, "homeTeam": { "id": 19, "name":  "Internacional" }, "awayTeam":  { "id": 11, "name":  "Vasco" } }
         ]
     },
     "37": {
@@ -321,12 +321,12 @@
             { "id": 212, "homeTeam": { "id": 5, "name":  "Botafogo" }, "awayTeam":  { "id": 6, "name":  "Cruzeiro" } },
             { "id": 213, "homeTeam": { "id": 4, "name":  "Palmeiras" }, "awayTeam":  { "id": 12, "name":  "Vitória" } },
             { "id": 214, "homeTeam": { "id": 7, "name":  "São Paulo" }, "awayTeam":  { "id": 19, "name":  "Internacional" } },
-            { "id": 215, "homeTeam": { "id": 17, "name":  "RB Bragantino" }, "awayTeam":  { "id": 2, "name":  "Atlético-MG" } },
+            { "id": 215, "homeTeam": { "id": 17, "name":  "Bragantino" }, "awayTeam":  { "id": 2, "name":  "Atlético-MG" } },
             { "id": 216, "homeTeam": { "id": 3, "name":  "Grêmio" }, "awayTeam":  { "id": 1, "name":  "Fluminense" } },
-            { "id": 217, "homeTeam": { "id": 8, "name":  "Bahia" }, "awayTeam":  { "id": 9, "name":  "Recife" } },
+            { "id": 217, "homeTeam": { "id": 8, "name":  "Bahia" }, "awayTeam":  { "id": 9, "name":  "Sport" } },
             { "id": 218, "homeTeam": { "id": 15, "name":  "Fortaleza" }, "awayTeam":  { "id": 10, "name":  "Corinthians" } },
             { "id": 219, "homeTeam": { "id": 16, "name":  "Juventude" }, "awayTeam":  { "id": 20, "name":  "Santos" } },
-            { "id": 220, "homeTeam": { "id": 11, "name":  "Vasco da Gama" }, "awayTeam":  { "id": 18, "name":  "Mirassol" } }
+            { "id": 220, "homeTeam": { "id": 11, "name":  "Vasco" }, "awayTeam":  { "id": 18, "name":  "Mirassol" } }
         ]
     },
     "38": {
@@ -337,11 +337,11 @@
             { "id": 223, "homeTeam": { "id": 10, "name":  "Corinthians" }, "awayTeam":  { "id": 16, "name":  "Juventude" } },
             { "id": 224, "homeTeam": { "id": 20, "name":  "Santos" }, "awayTeam":  { "id": 6, "name":  "Cruzeiro" } },
             { "id": 225, "homeTeam": { "id": 18, "name":  "Mirassol" }, "awayTeam":  { "id": 13, "name":  "Flamengo" } },
-            { "id": 226, "homeTeam": { "id": 2, "name":  "Atlético-MG" }, "awayTeam":  { "id": 11, "name":  "Vasco da Gama" } },
-            { "id": 227, "homeTeam": { "id": 19, "name":  "Internacional" }, "awayTeam":  { "id": 17, "name":  "RB Bragantino" } },
+            { "id": 226, "homeTeam": { "id": 2, "name":  "Atlético-MG" }, "awayTeam":  { "id": 11, "name":  "Vasco" } },
+            { "id": 227, "homeTeam": { "id": 19, "name":  "Internacional" }, "awayTeam":  { "id": 17, "name":  "Bragantino" } },
             { "id": 228, "homeTeam": { "id": 12, "name":  "Vitória" }, "awayTeam":  { "id": 7, "name":  "São Paulo" } },
             { "id": 229, "homeTeam": { "id": 14, "name":  "Ceará" }, "awayTeam":  { "id": 4, "name":  "Palmeiras" } },
-            { "id": 230, "homeTeam": { "id": 9, "name":  "Recife" }, "awayTeam":  { "id": 3, "name":  "Grêmio" } }
+            { "id": 230, "homeTeam": { "id": 9, "name":  "Sport" }, "awayTeam":  { "id": 3, "name":  "Grêmio" } }
         ]
     }
 }
