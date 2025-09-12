@@ -9,29 +9,29 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="bg-gray-50">
     <!-- Main Container -->
-    <div class="flex min-h-screen flex-col md:flex-row bg-gray-50 max-w-[1200px] mx-auto" data-section="main-container">
+    <div class="flex justify-center content-center flex-col min-h-screen md:flex-row max-w-[1200px] mx-auto" data-section="main-container">
         <!-- Standings Section -->
         <div class="p-4 overflow-y-auto" data-section="standings-section">
             <!-- Standings Card -->
             <div class="bg-white rounded-lg shadow overflow-hidden" data-section="standings-card">
                 <!-- Standings Header -->
-                <div class="flex items-center gap-2 p-6 border-b border-gray-200" data-section="standings-header">
+                <div class="flex flex-col items-center gap-2 p-4 border-b border-gray-200" data-section="standings-header">
                     <h1 class="text-2xl font-bold">Classificação do Campeonato Brasileiro</h1>
-                </div>
-                <!-- Standings Actions -->
-                <div class="flex items-center justify-center gap-2 flex-wrap p-4 border-b border-gray-200"
-                    data-section="standings-actions">
-                    <button id="simulate-round"
-                        class="px-4 py-2 rounded-md border text-white bg-blue-600 border-blue-600 hover:bg-blue-700 transition">Simular
-                        Rodada</button>
-                    <button id="clear-round"
-                        class="px-4 py-2 rounded-md border text-white bg-red-500 border-red-500 hover:bg-red-600 transition">Limpar
-                        Rodada</button>
-                    <button id="reset-championship"
-                        class="px-4 py-2 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 transition">Reset
-                        Completo</button>
+                    <!-- Standings Actions -->
+                    <div class="flex items-center justify-center gap-2 flex-wrap"
+                        data-section="standings-actions">
+                        <button id="simulate-round"
+                            class="p-2 rounded-md border text-white bg-blue-600 border-blue-600 hover:bg-blue-700 transition">Simular
+                            Rodada</button>
+                        <button id="clear-round"
+                            class="p-2 rounded-md border text-white bg-red-500 border-red-500 hover:bg-red-600 transition">Limpar
+                            Rodada</button>
+                        <button id="reset-championship"
+                            class="p-2 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 transition">Reset
+                            Completo</button>
+                    </div>
                 </div>
                 <!-- Standings Table Wrapper -->
                 <div class="flex w-full p-4" data-section="standings-table-wrapper">
@@ -98,15 +98,15 @@
             <!-- Matches Card -->
             <div class="bg-white rounded-lg shadow overflow-hidden" data-section="matches-card">
                 <!-- Matches Header -->
-                <div class="flex flex-col items-center gap-2 p-6 border-b border-gray-200" data-section="matches-header">
-                    <h2 class="text-lg font-bold mb-4 flex items-center gap-2">Jogos da Rodada</h2>
+                <div class="flex flex-col items-center gap-2 p-4 border-b border-gray-200" data-section="matches-header">
+                    <h2 class="text-lg font-bold flex items-center gap-2">Jogos da Rodada</h2>
                     <div class="flex items-center justify-center gap-4">
                         <button id="prev-round"
                             class="p-2 rounded-lg text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled>←</button>
-                        <div>
-                            <div id="round-title" class="text-lg font-semibold text-center w-36">Rodada 16</div>
-                            <div id="round-date" class="text-sm text-gray-500 text-center mt-1">23/07 ou 24/07</div>
+                        <div class="flex flex-col items-center">
+                            <span id="round-title" class="text-lg font-semibold text-center">Rodada 16</span>
+                            <span id="round-date" class="text-sm text-gray-500 text-center">23/07 ou 24/07</span>
                         </div>
                         <button id="next-round"
                             class="p-2 rounded-lg text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed">
@@ -114,7 +114,7 @@
                     </div>
                 </div>
                 <!-- Matches List -->
-                <div class="flex flex-col w-full p-4" id="matches-list" data-section="matches-list">
+                <div class="flex flex-col w-full p-4 gap-4" id="matches-list" data-section="matches-list">
                     <!-- Matches will be populated by JavaScript -->
                 </div>
             </div>

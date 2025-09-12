@@ -53,11 +53,13 @@ function setupEventListeners() {
 		UIManager.renderMatches();
 		UIManager.renderStandings();
 	});
+
 	if (elements.clearRoundBtn) elements.clearRoundBtn.addEventListener('click', () => {
 		MatchManager.clearRound();
 		UIManager.renderMatches();
 		UIManager.renderStandings();
 	});
+
 	if (elements.resetChampionshipBtn) elements.resetChampionshipBtn.addEventListener('click', async () => {
 		const ok = await DataManager.resetChampionship();
 		if (ok) {
@@ -140,7 +142,38 @@ export const UIManager = {
 		refreshElements();
 		if (elements.roundTitle) elements.roundTitle.textContent = `Rodada ${state.currentRound}`;
 		if (elements.roundDate) elements.roundDate.textContent = state.currentRoundDate || '';
-		UIRenderer.renderMatches();
+		const list = elements.matchesList;
+		if (!list) return;
+		const matches = (state && state.matches) || [];
+		if (!matches || matches.length === 0) {
+			list.innerHTML = UIRenderer.renderEmptyMatches();
+			return;
+		}
+		// render match cards
+		list.innerHTML = matches.map(m => UIRenderer.renderMatchCard(m)).join('');
+
+		// attach input change handlers so manual input updates standings immediately
+		const inputs = list.querySelectorAll('.match-input');
+		inputs.forEach(inp => {
+			inp.addEventListener('change', (e) => {
+				const id = e.target.getAttribute('data-match-id');
+				const field = e.target.getAttribute('data-field');
+				const raw = e.target.value;
+				let value;
+				if (raw === '' || raw === null) {
+					value = "";
+				} else {
+					const n = parseInt(raw, 10);
+					value = Number.isNaN(n) ? "" : n;
+				}
+				// delegate to MatchManager and then refresh UI
+				if (MatchManager && typeof MatchManager.updateMatchScore === 'function') {
+					MatchManager.updateMatchScore(id, field, value);
+				}
+				UIManager.renderMatches();
+				UIManager.renderStandings();
+			});
+		});
 	},
 
 	/**

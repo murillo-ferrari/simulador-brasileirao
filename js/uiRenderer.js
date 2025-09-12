@@ -28,20 +28,28 @@ export const UIRenderer = {
         const matchId = match.id;
         const isComplete = MatchService.isMatchComplete(match);
         return `
-            <div class="bg-gray-50 rounded-lg p-1 border border-gray-200 mb-2 ${isComplete ? 'ring-2 ring-green-200' : ''}" data-match-complete="${isComplete}" data-match-id="${matchId}">
+            <div class="min-w-[450px] bg-gray-50 rounded-lg p-4 border border-gray-200 ${isComplete ? 'ring-2 ring-green-200' : ''}" data-match-complete="${isComplete}" data-match-id="${matchId}">
                 <div class="flex gap-2 items-center">
-                    <div class="flex min-w-[9.375rem] items-center justify-between">
-                        <span class="flex-1 text-right pr-5">${homeTeam.name}</span>
-                        <img class="w-8 h-8 object-contain" src="${TeamService.getTeamLogo(homeTeam)}" alt="${homeTeam.name}">
+                    <div class="flex min-w-[9.375rem] items-center justify-between gap-2">
+                        <div class="flex-1 text-right">
+                            <span class="block truncate font-medium">${homeTeam.name}</span>
+                        </div>
+                        <div class="flex items-center justify-end">
+                            <img class="w-7 h-7 object-contain" src="${TeamService.getTeamLogo(homeTeam)}" alt="${homeTeam.name}">
+                        </div>
                     </div>
-                    <div class="flex items-center gap-2 my-2">
+                    <div class="flex items-center content-center gap-2">
                         <input type="number" min="0" max="${CONFIG.MAX_GOALS}" value="${match.homeScore ?? ''}" id="home-score-${matchId}" data-match-id="${matchId}" data-field="homeScore" class="match-input w-12 h-8 text-center border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" aria-label="Placar do ${homeTeam.name}">
                         <span aria-hidden="true">×</span>
                         <input type="number" min="0" max="${CONFIG.MAX_GOALS}" value="${match.awayScore ?? ''}" id="away-score-${matchId}" data-match-id="${matchId}" data-field="awayScore" class="match-input w-12 h-8 text-center border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" aria-label="Placar do ${awayTeam.name}">
                     </div>
-                    <div class="flex min-w-[9.375rem] items-center justify-between">
-                        <img class="w-8 h-8 object-contain" src="${TeamService.getTeamLogo(awayTeam)}" alt="${awayTeam.name}">
-                        <span class="flex-1 text-left pl-5">${awayTeam.name}</span>
+                    <div class="flex min-w-[9.375rem] items-center justify-between gap-2">
+                        <div class="flex items-center">
+                            <img class="w-7 h-7 object-contain" src="${TeamService.getTeamLogo(awayTeam)}" alt="${awayTeam.name}">
+                        </div>
+                        <div class="flex-1 text-left">
+                            <span class="block truncate font-medium">${awayTeam.name}</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -119,10 +127,10 @@ export const UIRenderer = {
                         <div class="relative w-2 h-6 flex items-center justify-center" aria-hidden="true">
                             ${changeIndicator}
                         </div>
-                        <div class="flex items-center gap-2">
-                            <div class="team-logo">
-                                <img class="w-7 h-7 object-contain" src="${TeamService.getTeamLogo(team)}" alt="${team.name}">
-                            </div>
+                        <div class="flex items-center gap-2" data-team-name="${team.name}">
+                            <div class="hidden sm:flex team-logo">
+                                    <img class="w-7 h-7 object-contain" src="${TeamService.getTeamLogo(team)}" alt="${team.name}">
+                                </div>
                             <div>
                                 ${team.name}
                             </div>
