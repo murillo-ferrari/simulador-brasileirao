@@ -21,7 +21,7 @@
                     <h1 class="text-2xl font-bold">Classificação do Campeonato Brasileiro</h1>
                 </div>
                 <!-- Standings Actions -->
-                <div class="flex gap-4 flex-wrap p-4 border-b border-gray-200" data-section="standings-actions">
+                <div class="flex items-center justify-center gap-2 flex-wrap p-4 border-b border-gray-200" data-section="standings-actions">
                     <button id="simulate-round"
                         class="px-4 py-2 rounded-md border text-white bg-blue-600 border-blue-600 hover:bg-blue-700 transition">Simular
                         Rodada</button>
@@ -39,15 +39,10 @@
                         data-section="standings-fixed-columns">
                         <table class="min-w-max border-collapse">
                             <thead>
-                                <tr>
-                                    <th
-                                        class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 py-2">
-                                        Pos</th>
-                                    <th
-                                        class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 py-2">
-                                        Time</th>
-                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 py-2"
-                                        id="points-header">PTS</th>
+                                <tr class="h-10 border-b grid grid-cols-[15%_70%_15%]">
+                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider content-center justify-start">Pos</th>
+                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider content-center justify-start">Time</th>
+                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider content-center justify-start" id="points-header">PTS</th>
                                 </tr>
                             </thead>
                             <tbody id="standings-fixed-body">
@@ -59,27 +54,20 @@
                     <div class="overflow-x-auto flex-1 w-full" data-section="standings-scrollable-columns">
                         <table class="min-w-max border-collapse">
                             <thead>
-                                <tr>
-                                    <th
-                                        class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 py-2">
+                                <tr class="h-10 border-b grid grid-cols-7">
+                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 content-center">
                                         J</th>
-                                    <th
-                                        class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 py-2">
+                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 content-center">
                                         V</th>
-                                    <th
-                                        class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 py-2">
+                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 content-center">
                                         E</th>
-                                    <th
-                                        class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 py-2">
+                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 content-center">
                                         D</th>
-                                    <th
-                                        class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 py-2">
+                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 content-center">
                                         GP</th>
-                                    <th
-                                        class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 py-2">
+                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 content-center">
                                         GC</th>
-                                    <th
-                                        class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 py-2">
+                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 content-center">
                                         SG</th>
                                 </tr>
                             </thead>
