@@ -13,7 +13,7 @@
     <!-- Main Container -->
     <div class="flex min-h-screen flex-col md:flex-row bg-gray-50 max-w-[1200px] mx-auto" data-section="main-container">
         <!-- Standings Section -->
-        <div class="p-6 overflow-y-auto" data-section="standings-section">
+        <div class="p-4 overflow-y-auto" data-section="standings-section">
             <!-- Standings Card -->
             <div class="bg-white rounded-lg shadow overflow-hidden" data-section="standings-card">
                 <!-- Standings Header -->
@@ -21,7 +21,8 @@
                     <h1 class="text-2xl font-bold">Classificação do Campeonato Brasileiro</h1>
                 </div>
                 <!-- Standings Actions -->
-                <div class="flex items-center justify-center gap-2 flex-wrap p-4 border-b border-gray-200" data-section="standings-actions">
+                <div class="flex items-center justify-center gap-2 flex-wrap p-4 border-b border-gray-200"
+                    data-section="standings-actions">
                     <button id="simulate-round"
                         class="px-4 py-2 rounded-md border text-white bg-blue-600 border-blue-600 hover:bg-blue-700 transition">Simular
                         Rodada</button>
@@ -33,16 +34,21 @@
                         Completo</button>
                 </div>
                 <!-- Standings Table Wrapper -->
-                <div class="flex w-full" data-section="standings-table-wrapper">
+                <div class="flex w-full p-4" data-section="standings-table-wrapper">
                     <!-- Standings Fixed Columns -->
                     <div class="flex-none bg-white border-r border-gray-200 z-10"
                         data-section="standings-fixed-columns">
                         <table class="min-w-max border-collapse">
                             <thead>
                                 <tr class="h-10 border-b grid grid-cols-[15%_70%_15%]">
-                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider content-center justify-start">Pos</th>
-                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider content-center justify-start">Time</th>
-                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider content-center justify-start" id="points-header">PTS</th>
+                                    <th
+                                        class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider content-center justify-start">
+                                        Pos</th>
+                                    <th
+                                        class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider content-center justify-start">
+                                        Time</th>
+                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider content-center justify-start"
+                                        id="points-header">PTS</th>
                                 </tr>
                             </thead>
                             <tbody id="standings-fixed-body">
@@ -55,19 +61,26 @@
                         <table class="min-w-max border-collapse">
                             <thead>
                                 <tr class="h-10 border-b grid grid-cols-7">
-                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 content-center">
+                                    <th
+                                        class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 content-center">
                                         J</th>
-                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 content-center">
+                                    <th
+                                        class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 content-center">
                                         V</th>
-                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 content-center">
+                                    <th
+                                        class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 content-center">
                                         E</th>
-                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 content-center">
+                                    <th
+                                        class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 content-center">
                                         D</th>
-                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 content-center">
+                                    <th
+                                        class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 content-center">
                                         GP</th>
-                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 content-center">
+                                    <th
+                                        class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 content-center">
                                         GC</th>
-                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 content-center">
+                                    <th
+                                        class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider px-4 content-center">
                                         SG</th>
                                 </tr>
                             </thead>
@@ -79,26 +92,31 @@
                 </div>
             </div>
         </div>
+
         <!-- Matches Section -->
-        <div class="w-full md:w-[32rem] bg-white border-l border-gray-200 shadow-lg" data-section="matches-section">
-            <!-- Matches Header -->
-            <div class="p-6 border-b border-gray-200" data-section="matches-header">
-                <h2 class="text-lg font-bold mb-4 flex items-center gap-2">Jogos da Rodada</h2>
-                <div class="flex items-center justify-center gap-4">
-                    <button id="prev-round"
-                        class="p-2 rounded-lg text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-                        disabled>&lt;</button>
-                    <div>
-                        <div id="round-title" class="text-lg font-semibold text-center w-36">Rodada 16</div>
-                        <div id="round-date" class="text-sm text-gray-500 text-center mt-1">23/07 ou 24/07</div>
+        <div class="p-4 overflow-y-auto" data-section="matches-section">
+            <!-- Matches Card -->
+            <div class="bg-white rounded-lg shadow overflow-hidden" data-section="matches-card">
+                <!-- Matches Header -->
+                <div class="flex flex-col items-center gap-2 p-6 border-b border-gray-200" data-section="matches-header">
+                    <h2 class="text-lg font-bold mb-4 flex items-center gap-2">Jogos da Rodada</h2>
+                    <div class="flex items-center justify-center gap-4">
+                        <button id="prev-round"
+                            class="p-2 rounded-lg text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                            disabled>←</button>
+                        <div>
+                            <div id="round-title" class="text-lg font-semibold text-center w-36">Rodada 16</div>
+                            <div id="round-date" class="text-sm text-gray-500 text-center mt-1">23/07 ou 24/07</div>
+                        </div>
+                        <button id="next-round"
+                            class="p-2 rounded-lg text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed">
+                            →</button>
                     </div>
-                    <button id="next-round"
-                        class="p-2 rounded-lg text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed">&gt;</button>
                 </div>
-            </div>
-            <!-- Matches List -->
-            <div class="p-6 overflow-y-auto" id="matches-list" data-section="matches-list">
-                <!-- Matches will be populated by JavaScript -->
+                <!-- Matches List -->
+                <div class="flex flex-col w-full p-4" id="matches-list" data-section="matches-list">
+                    <!-- Matches will be populated by JavaScript -->
+                </div>
             </div>
         </div>
     </div>
