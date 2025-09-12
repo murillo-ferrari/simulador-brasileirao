@@ -1,9 +1,11 @@
-// Serviço de times
+// Team data management and validation
 export const TeamService = {
     /**
-     * Retorna o time com o id ou nome igual ao especificado.
-     * @param {number|string} id - id ou nome do time
-     * @returns {object|null} - time encontrado ou null se não for encontrado
+     * Returns a team object matching the given id or name from the state standings.
+     * Returns null if the team is not found or if the state is not valid.
+     * @param {number|string} id - id or name of the team
+     * @param {object} state - state object containing standings
+     * @returns {object|null} - team object matching the given id or name, or null
      */
     getTeamById(id, state) {
         if (!state || !Array.isArray(state.standings)) return null;
@@ -11,21 +13,21 @@ export const TeamService = {
     },
 
     /**
-     * Retorna a URL da logo do time.
-     * @param {object} team - time
-     * @returns {string} - URL da logo do time
+     * Returns the URL of the team's logo.
+     * @param {object} team - team
+     * @returns {string} - URL of the team's logo
      */
     getTeamLogo(team) {
         return team && team.image ? team.image : '';
     },
 
     /**
-     * Retorna um objeto com todas as estatísticas do time, garantindo que
-     * todos os campos estejam presentes, incluindo os que podem ser zero
-     * (derrotas, empates e gols contra). Além disso, calcula o saldo de
-     * gols.
-     * @param {object} team - time
-     * @returns {object} - objeto com todas as estatísticas do time
+     * Returns an object with all the team's statistics, ensuring that
+     * all fields are present, including those that may be zero
+     * (defeats, draws and goals against). In addition, it calculates the balance of
+     * goals.
+     * @param {object} team - team
+     * @returns {object} - object with all the team's statistics
      */
     ensureTeamStats(team) {
         return {
@@ -38,9 +40,9 @@ export const TeamService = {
     },
 
     /**
-     * Valida se o objeto do time tem todos os campos necessários.
-     * @param {object} team - time
-     * @returns {boolean} - true se o time tiver todos os campos necess rios, false caso contr rio
+     * Validates if the team object has all the required fields.
+     * @param {object} team - team
+     * @returns {boolean} - true if the team has all the required fields, false otherwise
      */
     validateTeamData(team) {
         const requiredFields = ['id', 'name', 'points', 'games', 'victories'];

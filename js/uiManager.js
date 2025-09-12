@@ -1,12 +1,10 @@
-import { TeamService } from './teamService.js';
 import { MatchManager } from './matchManager.js';
 import { DataManager, state } from './dataManager.js';
-import { StandingsCalculator } from './standingsCalculator.js';
 import { UIRenderer } from './uiRenderer.js';
 import { CONFIG } from './config.js';
 
-// Gerenciamento de UI
-const elements = {
+// UI management: rendering and event handling
+export const elements = {
 	matchesList: document.getElementById('matches-list'),
 	prevRoundBtn: document.getElementById('prev-round'),
 	nextRoundBtn: document.getElementById('next-round'),
@@ -133,10 +131,17 @@ export const UIManager = {
 		if (direction === 'prev' && state.currentRound > min) state.currentRound -= 1;
 		if (direction === 'next' && state.currentRound < max) state.currentRound += 1;
 		state.matches = state.allMatches[state.currentRound] || [];
+
 		// Update UI
 		if (elements.roundTitle) elements.roundTitle.textContent = `Rodada ${state.currentRound}`;
 		if (elements.prevRoundBtn) elements.prevRoundBtn.disabled = state.currentRound <= min;
 		if (elements.nextRoundBtn) elements.nextRoundBtn.disabled = state.currentRound >= max;
+
+		// Retrieve and update the round date for the new round
+		if (elements.roundDate) {
+			elements.roundDate.textContent = state.allMatches[state.currentRound].date || '';
+		}
+
 		UIManager.renderMatches();
 	}
 };

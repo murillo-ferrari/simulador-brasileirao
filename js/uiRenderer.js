@@ -1,4 +1,4 @@
-// Renderização de UI
+// Renders UI components based on the current state
 import { TeamService } from './teamService.js';
 import { MatchService } from './matchService.js';
 import { CONFIG } from './config.js';
@@ -8,9 +8,24 @@ import { UIManager } from './uiManager.js';
 import { MatchManager } from './matchManager.js';
 
 export const UIRenderer = {
+    /**
+     * Renders a match card based on the given match object.
+     * If the match is not already in the state.matches array, it is added.
+     * The rendered card contains two input fields for score editing and
+     * a brief summary of the match.
+     * @param {Object} match - The match to be rendered
+     * @param {number} match.id - The match id
+     * @param {Object} match.homeTeam - The home team object
+     * @param {number} match.homeTeam.id - The home team id
+     * @param {Object} match.awayTeam - The away team object
+     * @param {number} match.awayTeam.id - The away team id
+     * @param {number} [match.homeScore] - The home team score
+     * @param {number} [match.awayScore] - The away team score
+     * @returns {string} The rendered match card HTML
+     */
     renderMatchCard(match) {
-    const homeTeam = TeamService.getTeamById(match.homeTeam.id, state) || match.homeTeam;
-    const awayTeam = TeamService.getTeamById(match.awayTeam.id, state) || match.awayTeam;
+        const homeTeam = TeamService.getTeamById(match.homeTeam.id, state) || match.homeTeam;
+        const awayTeam = TeamService.getTeamById(match.awayTeam.id, state) || match.awayTeam;
         const matchId = match.id;
         const isComplete = MatchService.isMatchComplete(match);
         return `
@@ -34,6 +49,10 @@ export const UIRenderer = {
         `;
     },
 
+    /**
+     * Renders a message indicating that there are no matches available for the current round.
+     * @returns {string} HTML string
+     */
     renderEmptyMatches() {
         return `
             <div class="flex flex-col items-center justify-center p-8 text-gray-400">

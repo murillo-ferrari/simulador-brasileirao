@@ -1,4 +1,4 @@
-// Funções utilitárias
+// Utility functions
 export const Utils = {
     /**
      * Generates a random score between 0 and 6, with a given weight distribution.

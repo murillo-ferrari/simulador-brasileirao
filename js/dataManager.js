@@ -2,11 +2,13 @@ import { CONFIG } from './config.js';
 import { Utils } from './utils.js';
 import { TeamService } from './teamService.js';
 import { MatchService } from './matchService.js';
+import { elements } from './uiManager.js';
 
-// Gerenciamento de dados
+// Data state management
 export const state = {
 	standings: [],
 	currentRound: CONFIG.MIN_ROUND,
+	currentRoundDate: null,
 	matches: [],
 	loading: true,
 	simulatedMatches: new Map(),
@@ -14,8 +16,18 @@ export const state = {
 	initialStandings: []
 };
 
-// Carregamento dos dados via fetch dos arquivos JSON
+// DataManager handles loading and resetting data 
 export const DataManager = {
+	/**
+	 * Loads the initial data for the simulator by fetching the initial standings
+	 * and round fixtures from JSON files. If the fetches are successful, it will
+	 * set the state properties accordingly and return true. Otherwise, it will
+	 * log an error, alert the user and return false.
+	 * @async
+	 * @function
+	 * @returns {Promise<boolean>}
+	 * @since 0.1.0
+	 */
 	async loadData() {
 		try {
 			const [standingsRes, fixturesRes] = await Promise.all([
@@ -30,11 +42,17 @@ export const DataManager = {
 			const roundFixtures = await fixturesRes.json();
 			state.initialStandings = Utils.deepClone(initialStandings);
 			state.standings = state.initialStandings.map(team => TeamService.ensureTeamStats(team));
+			// Store the date for each round in allMatches as a property
 			state.allMatches = Object.keys(roundFixtures).reduce((acc, round) => {
-				acc[round] = roundFixtures[round].matches.map(MatchService.initializeMatch);
+				const matches = roundFixtures[round].matches.map(MatchService.initializeMatch);
+				// Attach the date to the array as a property
+				matches.date = roundFixtures[round].date || '';
+				acc[round] = matches;
 				return acc;
 			}, {});
+			// Set matches for the current round and set the round date
 			state.matches = state.allMatches[state.currentRound] || [];
+			state.currentRoundDate = (roundFixtures[state.currentRound] && roundFixtures[state.currentRound].date) || '';
 			return true;
 		} catch (e) {
 			console.error('DataManager.loadData error:', e);
@@ -42,10 +60,24 @@ export const DataManager = {
 			return false;
 		}
 	},
+	
+	/**
+	 * Resets the entire championship state to its initial state by clearing all simulated matches
+	 * and setting the current round to the minimum round. If the user confirms the reset,
+	 * it will also reload the data from the JSON files and return the result of the loadData
+	 * function. Otherwise, it will return a rejected promise.
+	 * @since 0.1.0
+	 * @returns {Promise<boolean>}
+	 */
 	resetChampionship() {
 		if (confirm('Tem certeza que deseja resetar todo o campeonato? Todos os resultados serão perdidos.')) {
 			state.simulatedMatches.clear();
 			state.currentRound = CONFIG.MIN_ROUND;
+
+			// Reset UI round title and date if elements exist
+			if (elements.roundTitle) elements.roundTitle.textContent = `Rodada ${CONFIG.MIN_ROUND}`;
+			if (elements.roundDate) elements.roundDate.textContent = state.allMatches[CONFIG.MIN_ROUND].date || '';
+
 			return this.loadData();
 		}
 		return Promise.resolve(false);
