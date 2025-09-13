@@ -2,6 +2,7 @@ import { MatchManager } from './matchManager.js';
 import { dataManager, state } from './dataManager.js';
 import { UIRenderer } from './uiRenderer.js';
 import { CONFIG } from './config.js';
+import { Utils } from './utils.js';
 
 // Elements are queried lazily to avoid timing issues when modules load
 const elements = {
@@ -13,7 +14,12 @@ const elements = {
 	loading: null,
 	simulateRoundBtn: null,
 	clearRoundBtn: null,
-	resetChampionshipBtn: null
+	resetChampionshipBtn: null,
+	// compact/full table controls (mobile)
+	compactTableBtn: null,
+	fullTableBtn: null,
+	standingsFixedBody: null,
+	standingsScrollBody: null
 };
 
 /**
@@ -32,6 +38,12 @@ function refreshElements() {
 	elements.simulateRoundBtn = document.getElementById('simulate-round');
 	elements.clearRoundBtn = document.getElementById('clear-round');
 	elements.resetChampionshipBtn = document.getElementById('reset-championship');
+
+	// compact/full table controls
+	elements.compactTableBtn = document.getElementById('compact-table');
+	elements.fullTableBtn = document.getElementById('full-table');
+	elements.standingsFixedBody = document.getElementById('standings-fixed-body');
+	elements.standingsScrollBody = document.getElementById('standings-scroll-body');
 }
 
 /**
@@ -105,6 +117,24 @@ function setupEventListeners() {
 				break;
 		}
 	});
+
+	// Wire compact/full controls to UIManager.toggleCompact
+	if (elements.compactTableBtn) elements.compactTableBtn.addEventListener('click', () => UIManager.toggleCompact(true, true));
+	if (elements.fullTableBtn) elements.fullTableBtn.addEventListener('click', () => UIManager.toggleCompact(false, true));
+
+	// Reflect current stored preference on buttons
+	UIManager.updateCompactButtons();
+
+	// Ensure full table when switching to desktop
+	window.addEventListener('resize', () => {
+		if (window.innerWidth >= 768) {
+			// Force full table on desktop temporarily (do not overwrite user preference)
+			UIManager.toggleCompact(false, false);
+		} else {
+			// On small viewports, reapply user's stored preference if set
+			if (state && state.compactTable) UIManager.toggleCompact(true, false);
+		}
+	});
 }
 
 // UIManager exposes methods required by DataManager and main
@@ -131,6 +161,21 @@ export const UIManager = {
 	 */
 	renderStandings() {
 		UIRenderer.renderStandings();
+		// Reapply user's compact table preference after rendering (do not persist this reapplication)
+		if (state && typeof state.compactTable !== 'undefined') {
+			// Reapply without animation to avoid flicker when standings change
+			UIManager.toggleCompact(!!state.compactTable, false, false);
+			UIManager.updateCompactButtons();
+		}
+	},
+
+	/**
+	 * Update visual state (active class) of compact/full buttons
+	 */
+	updateCompactButtons() {
+		refreshElements();
+		if (elements.compactTableBtn) elements.compactTableBtn.classList.toggle('active', !!state.compactTable);
+		if (elements.fullTableBtn) elements.fullTableBtn.classList.toggle('active', !state.compactTable);
 	},
 
 	/**
@@ -205,7 +250,7 @@ export const UIManager = {
 
 		UIManager.renderMatches();
 	}
-,
+	,
 
 	/**
 	 * Update the round title and date in the UI
@@ -225,7 +270,69 @@ export const UIManager = {
 		refreshElements();
 		if (elements.roundTitle) elements.roundTitle.textContent = `Rodada ${CONFIG.MIN_ROUND}`;
 		if (elements.roundDate) elements.roundDate.textContent = date || '';
-	}
+	},
+
+	/**
+	 * Show or hide middle rows to present a compact table on small viewports.
+	 * When `compact` is true, only the top 4 and bottom 4 rows are shown.
+	 * @param {boolean} compact
+	 * @param {boolean} [compact]
+	 * @param {boolean} [persist=true] whether to store the user's choice in `state`
+	 * @param {boolean} [animate=true] whether to use animated collapse/expand
+	 */
+	toggleCompact(compact, persist = true, animate = true) {
+		refreshElements();
+		const fixedBody = elements.standingsFixedBody || document.getElementById('standings-fixed-body');
+		const scrollBody = elements.standingsScrollBody || document.getElementById('standings-scroll-body');
+		if (!fixedBody || !scrollBody) return;
+		const fixedRows = Array.from(fixedBody.querySelectorAll('tr'));
+		const scrollRows = Array.from(scrollBody.querySelectorAll('tr'));
+		const fixedLen = fixedRows.length;
+		const scrollLen = scrollRows.length;
+		if (fixedLen === 0 && scrollLen === 0) return;
+
+		const topCount = 4;
+		const bottomCount = 4;
+
+		const collapseRow = (row) => {
+			if (!row) return;
+			if (animate) return Utils.collapseElement(row);
+			row.style.display = 'none';
+		};
+		const expandRow = (row) => {
+			if (!row) return;
+			if (animate) return Utils.expandElement(row);
+			row.style.display = '';
+		};
+
+		// operate on each body independently so mismatched row counts don't cause wrong hiding
+		for (let i = 0; i < fixedLen; i++) {
+			const showFixed = !compact || i < topCount || i >= fixedLen - bottomCount;
+			const fr = fixedRows[i];
+			if (showFixed) {
+				if (fr && fr.style.display === 'none') expandRow(fr);
+			} else {
+				if (fr && fr.style.display !== 'none') collapseRow(fr);
+			}
+		}
+
+		for (let i = 0; i < scrollLen; i++) {
+			const showScroll = !compact || i < topCount || i >= scrollLen - bottomCount;
+			const sr = scrollRows[i];
+			if (showScroll) {
+				if (sr && sr.style.display === 'none') expandRow(sr);
+			} else {
+				if (sr && sr.style.display !== 'none') collapseRow(sr);
+			}
+		}
+
+		// persist user's choice in application state if requested
+		if (persist) {
+			state.compactTable = !!compact;
+			// update visual state
+			UIManager.updateCompactButtons();
+		}
+	},
 };
 
 export { setupEventListeners };

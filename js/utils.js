@@ -1,3 +1,5 @@
+import { CONFIG } from './config.js';
+
 // Utility functions
 export const Utils = {
     /**
@@ -75,7 +77,7 @@ export const Utils = {
                         row.style.transform = `translateY(${delta}px)`;
                         row.style.willChange = 'transform';
                         requestAnimationFrame(() => {
-                            row.style.transition = 'transform 330ms cubic-bezier(.2,.8,.2,1)';
+                            row.style.transition = `transform ${CONFIG.ANIM.flipDuration}ms ${CONFIG.ANIM.flipEasing}`;
                             row.style.transform = '';
                             const cleanup = () => {
                                 row.style.transition = '';
@@ -90,6 +92,71 @@ export const Utils = {
             });
         } catch (err) {
             // swallow animation errors to avoid breaking rendering
+        }
+    },
+
+    /**
+     * Smoothly collapses an element vertically (height, opacity, padding) and sets display:none.
+     * @param {HTMLElement} el
+     * @param {number} durationMs
+     */
+    collapseElement(el, durationMs = CONFIG.ANIM.rowCollapseDuration) {
+        if (!el) return;
+        try {
+            el.style.transition = `height ${Math.round(durationMs * CONFIG.ANIM.rowHeightRatio)}ms ${CONFIG.ANIM.rowEasing}, opacity ${Math.round(durationMs * CONFIG.ANIM.rowOpacityRatio)}ms ${CONFIG.ANIM.rowOpacityEasing}, padding ${Math.round(durationMs * CONFIG.ANIM.rowPaddingRatio)}ms ${CONFIG.ANIM.rowEasing}`;
+            const rect = el.getBoundingClientRect();
+            el.style.boxSizing = 'border-box';
+            el.style.height = rect.height + 'px';
+            // force reflow
+            void el.offsetHeight;
+            el.style.height = '0px';
+            el.style.opacity = '0';
+            el.style.paddingTop = '0px';
+            el.style.paddingBottom = '0px';
+            setTimeout(() => {
+                el.style.display = 'none';
+                // cleanup
+                el.style.transition = '';
+                el.style.height = '';
+                el.style.opacity = '';
+                el.style.paddingTop = '';
+                el.style.paddingBottom = '';
+            }, durationMs + 10);
+        } catch (e) {
+            el.style.display = 'none';
+        }
+    },
+
+    /**
+     * Smoothly expands an element vertically (height, opacity, padding).
+     * @param {HTMLElement} el
+     * @param {number} durationMs
+     */
+    expandElement(el, durationMs = CONFIG.ANIM.rowCollapseDuration) {
+        if (!el) return;
+        try {
+            el.style.display = '';
+            const rect = el.getBoundingClientRect();
+            // start collapsed
+            el.style.height = '0px';
+            el.style.opacity = '0';
+            el.style.paddingTop = '0px';
+            el.style.paddingBottom = '0px';
+            el.style.boxSizing = 'border-box';
+            // force reflow
+            void el.offsetHeight;
+            el.style.transition = `height ${Math.round(durationMs * CONFIG.ANIM.rowHeightRatio)}ms ${CONFIG.ANIM.rowEasing}, opacity ${Math.round(durationMs * CONFIG.ANIM.rowOpacityRatio)}ms ${CONFIG.ANIM.rowOpacityEasing}, padding ${Math.round(durationMs * CONFIG.ANIM.rowPaddingRatio)}ms ${CONFIG.ANIM.rowEasing}`;
+            el.style.height = rect.height + 'px';
+            el.style.opacity = '1';
+            el.style.paddingTop = '';
+            el.style.paddingBottom = '';
+            setTimeout(() => {
+                // cleanup
+                el.style.transition = '';
+                el.style.height = '';
+            }, durationMs + 10);
+        } catch (e) {
+            el.style.display = '';
         }
     }
 };

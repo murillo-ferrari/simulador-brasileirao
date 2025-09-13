@@ -130,12 +130,19 @@ export const UIRenderer = {
                 const prevFixed = fixedBody.querySelectorAll('tr[data-team-id]');
                 prevFixed.forEach(r => {
                     const id = r.getAttribute('data-team-id');
-                    if (id) prevPositions[id] = r.getBoundingClientRect().top;
+                    try {
+                        const rect = r.getBoundingClientRect();
+                        // only record visible rows (height > 0)
+                        if (id && rect && rect.height > 0) prevPositions[id] = rect.top;
+                    } catch (e) { /* ignore */ }
                 });
                 const prevScroll = scrollBody.querySelectorAll('tr[data-team-id]');
                 prevScroll.forEach(r => {
                     const id = r.getAttribute('data-team-id');
-                    if (id) prevPositions[id] = r.getBoundingClientRect().top;
+                    try {
+                        const rect = r.getBoundingClientRect();
+                        if (id && rect && rect.height > 0) prevPositions[id] = rect.top;
+                    } catch (e) { /* ignore */ }
                 });
             } catch (err) {
                 // ignore measurement errors
@@ -201,13 +208,26 @@ export const UIRenderer = {
             };
 
             // Render rows using helpers
-            sorted.forEach(team => {
+            sorted.forEach((team, idx) => {
                 const canonical = TeamService.getTeamById(team.id, state) || team;
                 const change = (visibleChanges && visibleChanges[team.id]) || null;
                 const changeIndicatorHtml = buildChangeIndicator(change);
 
-                fixedBody.appendChild(createFixedRow(team, canonical, changeIndicatorHtml));
-                scrollBody.appendChild(createScrollRow(team));
+                const fixedRow = createFixedRow(team, canonical, changeIndicatorHtml);
+                const scrollRow = createScrollRow(team);
+
+                // If user prefers compact view, hide middle rows (only top/bottom kept)
+                const compact = !!state.compactTable;
+                const topCount = 4;
+                const bottomCount = 4;
+                const show = !compact || idx < topCount || idx >= sorted.length - bottomCount;
+                if (!show) {
+                    fixedRow.style.display = 'none';
+                    scrollRow.style.display = 'none';
+                }
+
+                fixedBody.appendChild(fixedRow);
+                scrollBody.appendChild(scrollRow);
             });
 
                 // After rendering, animate rows that changed position using FLIP

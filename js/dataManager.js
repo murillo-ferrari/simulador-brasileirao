@@ -15,7 +15,9 @@ export const state = {
 	allMatches: {},
 	initialStandings: [],
 	previousStandings: [],
-	teams: []
+	teams: [],
+	// Persist compact table preference (false = full table)
+	compactTable: false
 };
 
 // DataManager handles loading and resetting data 
@@ -99,6 +101,8 @@ export const dataManager = {
 
 			// Reset UI round title and date via UIManager
 			if (UIManager && typeof UIManager.resetRoundInfo === 'function') UIManager.resetRoundInfo();
+			// Reset compact table preference
+			state.compactTable = false;
 
 			return this.loadData();
 		}
