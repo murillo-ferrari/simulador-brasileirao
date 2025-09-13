@@ -1,4 +1,4 @@
-// Configurações globais do simulador
+// Configuration constants for the football table application
 export const CONFIG = {
     MIN_ROUND: 16,
     MAX_ROUND: 38,

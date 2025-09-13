@@ -2,7 +2,7 @@
 // <script type="module" src="js/main.js"></script>
 import { CONFIG } from "./config.js";
 import { UIManager, setupEventListeners } from "./uiManager.js";
-import { state, DataManager } from "./dataManager.js";
+import { state, dataManager } from "./dataManager.js";
 
 /**
  * Initializes the app by loading data and setting up event listeners. If the
@@ -20,7 +20,7 @@ async function init() {
 		if (UIManager && typeof UIManager.showLoading === "function")
 			UIManager.showLoading();
 
-		const ok = await DataManager.loadData();
+		const ok = await dataManager.loadData();
 		if (!ok) {
 			if (UIManager && typeof UIManager.hideLoading === "function")
 				UIManager.hideLoading();

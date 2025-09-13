@@ -19,7 +19,7 @@ export const state = {
 };
 
 // DataManager handles loading and resetting data 
-export const DataManager = {
+export const dataManager = {
 	/**
 	 * Loads the initial data for the simulator by fetching the initial standings
 	 * and round fixtures from JSON files. If the fetches are successful, it will

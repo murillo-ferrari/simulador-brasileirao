@@ -1,5 +1,5 @@
 import { MatchManager } from './matchManager.js';
-import { DataManager, state } from './dataManager.js';
+import { dataManager, state } from './dataManager.js';
 import { UIRenderer } from './uiRenderer.js';
 import { CONFIG } from './config.js';
 
@@ -61,7 +61,7 @@ function setupEventListeners() {
 	});
 
 	if (elements.resetChampionshipBtn) elements.resetChampionshipBtn.addEventListener('click', async () => {
-		const ok = await DataManager.resetChampionship();
+		const ok = await dataManager.resetChampionship();
 		if (ok) {
 			// Update round title/date from state, then re-render
 			UIManager.updateRoundInfo(state.currentRound, state.currentRoundDate);
