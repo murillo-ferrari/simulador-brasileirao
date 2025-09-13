@@ -162,12 +162,25 @@ export const UIRenderer = {
 
             // Helper: create the fixed (left) row
             const createFixedRow = (team, canonical, changeIndicatorHtml) => {
+                let badgeClass = '';
+                switch (true) {
+                    case team.position <= 4:
+                        badgeClass = 'bg-green-100 text-green-800'; break;
+                    case team.position <= 6:
+                        badgeClass = 'bg-blue-100 text-blue-800'; break;
+                    case team.position <= 12:
+                        badgeClass = 'bg-orange-100 text-orange-800'; break;
+                    case team.position <= 16:
+                        badgeClass = 'bg-gray-100 text-gray-700'; break;
+                    default:
+                        badgeClass = 'bg-red-100 text-red-800'; break;
+                }
                 const row = document.createElement('tr');
                 row.classList.add('h-12', 'border-b', 'grid', 'grid-cols-[15%_70%_15%]');
                 row.setAttribute('data-team-id', String(team.id));
                 row.innerHTML = `
                     <td class="flex items-center justify-center content-center relative">
-                        <span class="px-2 py-1 rounded-full text-xs font-medium bg-gray-100">${team.position}</span>
+                        <span class="px-2 py-1 rounded-full text-xs font-medium ${badgeClass}">${team.position}</span>
                     </td>
                     <td class="flex items-center content-center gap-2">
                         <div class="relative w-2 h-6 flex items-center justify-center" aria-hidden="true">
@@ -230,15 +243,15 @@ export const UIRenderer = {
                 scrollBody.appendChild(scrollRow);
             });
 
-                // After rendering, animate rows that changed position using FLIP
-                try {
-                    // build a set of team ids that actually changed position (visibleChanges)
-                    const changedIds = new Set(Object.keys(visibleChanges || {}));
-                    Utils.animateFLIP(fixedBody, prevPositions, changedIds);
-                    Utils.animateFLIP(scrollBody, prevPositions, changedIds);
-                } catch (err) {
-                    // ignore animation errors
-                }
+            // After rendering, animate rows that changed position using FLIP
+            try {
+                // build a set of team ids that actually changed position (visibleChanges)
+                const changedIds = new Set(Object.keys(visibleChanges || {}));
+                Utils.animateFLIP(fixedBody, prevPositions, changedIds);
+                Utils.animateFLIP(scrollBody, prevPositions, changedIds);
+            } catch (err) {
+                // ignore animation errors
+            }
 
             // After rendering, update previous standings snapshot to the new sorted list
             state.previousStandings = JSON.parse(JSON.stringify(sorted || []));
