@@ -5,55 +5,76 @@ import { CONFIG } from './config.js';
 import { state } from './dataManager.js';
 import { StandingsCalculator } from './standingsCalculator.js';
 import { MatchManager } from './matchManager.js';
+import { Utils } from './utils.js';
 
 export const UIRenderer = {
+
     /**
-     * Renders a match card based on the given match object.
-     * If the match is not already in the state.matches array, it is added.
-     * The rendered card contains two input fields for score editing and
-     * a brief summary of the match.
-     * @param {Object} match - The match to be rendered
-     * @param {number} match.id - The match id
-     * @param {Object} match.homeTeam - The home team object
-     * @param {number} match.homeTeam.id - The home team id
-     * @param {Object} match.awayTeam - The away team object
-     * @param {number} match.awayTeam.id - The away team id
-     * @param {number} [match.homeScore] - The home team score
-     * @param {number} [match.awayScore] - The away team score
-     * @returns {string} The rendered match card HTML
+     * Renders a match card for a given match.
+     * The match card consists of three columns: the home team (left column),
+     * the score inputs (middle column), and the away team (right column).
+     * The home team and away team have their logos and names displayed.
+     * The score inputs are number inputs with min and max values based on the
+     * CONFIG.MAX_GOALS constant. The inputs are also given an aria-label
+     * with the name of the team.
+     * The match card also receives a data-match-complete attribute that is set to
+     * true if the match is complete, and false otherwise. A CSS class is also
+     * added to the match card element to style it based on whether the match is
+     * complete or not.
+     * @param {Object} match - The match object to render.
+     * @returns {string} The rendered HTML string.
      */
     renderMatchCard(match) {
-        const homeTeam = TeamService.getTeamById(match.homeTeam.id, state) || match.homeTeam;
-        const awayTeam = TeamService.getTeamById(match.awayTeam.id, state) || match.awayTeam;
+        // Resolve canonical metadata (may return null if not available)
+        const homeMeta = TeamService.getTeamById(match.homeTeam?.id, state) || match.homeTeam || {};
+        const awayMeta = TeamService.getTeamById(match.awayTeam?.id, state) || match.awayTeam || {};
+
+        const homeName = homeMeta.name || match.homeTeam?.name || '';
+        const awayName = awayMeta.name || match.awayTeam?.name || '';
+        const homeLogo = TeamService.getTeamLogo(homeMeta, state) || '';
+        const awayLogo = TeamService.getTeamLogo(awayMeta, state) || '';
+
         const matchId = match.id;
         const isComplete = MatchService.isMatchComplete(match);
-        return `
-            <div class="min-w-[450px] bg-gray-50 rounded-lg p-4 border border-gray-200 ${isComplete ? 'ring-2 ring-green-200' : ''}" data-match-complete="${isComplete}" data-match-id="${matchId}">
-                <div class="flex gap-2 items-center">
-                    <div class="flex min-w-[9.375rem] items-center justify-between gap-2">
-                        <div class="flex-1 text-right">
-                            <span class="block truncate font-medium">${homeTeam.name || match.homeTeam.name || ''}</span>
-                        </div>
-                        <div class="flex items-center justify-end">
-                            <img class="w-7 h-7 object-contain" src="${TeamService.getTeamLogo(homeTeam, state)}" alt="${homeTeam.name || ''}">
-                        </div>
-                    </div>
-                    <div class="flex items-center content-center gap-2">
-                        <input type="number" min="0" max="${CONFIG.MAX_GOALS}" value="${match.homeScore ?? ''}" id="home-score-${matchId}" data-match-id="${matchId}" data-field="homeScore" class="match-input w-12 h-8 text-center border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" aria-label="Placar do ${homeTeam.name || ''}">
-                        <span aria-hidden="true">×</span>
-                        <input type="number" min="0" max="${CONFIG.MAX_GOALS}" value="${match.awayScore ?? ''}" id="away-score-${matchId}" data-match-id="${matchId}" data-field="awayScore" class="match-input w-12 h-8 text-center border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" aria-label="Placar do ${awayTeam.name || ''}">
-                    </div>
-                    <div class="flex min-w-[9.375rem] items-center justify-between gap-2">
-                        <div class="flex items-center">
-                            <img class="w-7 h-7 object-contain" src="${TeamService.getTeamLogo(awayTeam, state)}" alt="${awayTeam.name || ''}">
-                        </div>
-                        <div class="flex-1 text-left">
-                            <span class="block truncate font-medium">${awayTeam.name || match.awayTeam.name || ''}</span>
-                        </div>
-                    </div>
+
+        // Left column: home team (name right-aligned, logo to the left of the center)
+        const leftCol = `
+            <div class="flex min-w-[9.375rem] items-center justify-between gap-2">
+                <div class="flex-1 text-right">
+                    <span class="block truncate font-medium">${homeName}</span>
                 </div>
-            </div>
-        `;
+                <div class="flex items-center justify-end">
+                    <img class="w-7 h-7 object-contain" src="${homeLogo}" alt="${homeName}">
+                </div>
+            </div>`;
+
+        // Middle column: inputs for scores
+        const middleCol = `
+            <div class="flex items-center content-center gap-2">
+                <input type="number" min="0" max="${CONFIG.MAX_GOALS}" value="${match.homeScore ?? ''}" data-match-id="${matchId}" data-field="homeScore" class="match-input w-12 h-8 text-center border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400" aria-label="Placar do ${homeName}">
+                <span aria-hidden="true">×</span>
+                <input type="number" min="0" max="${CONFIG.MAX_GOALS}" value="${match.awayScore ?? ''}" data-match-id="${matchId}" data-field="awayScore" class="match-input w-12 h-8 text-center border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400" aria-label="Placar do ${awayName}">
+            </div>`;
+
+        // Right column: away team (logo then name)
+        const rightCol = `
+            <div class="flex min-w-[9.375rem] items-center justify-between gap-2">
+                <div class="flex items-center">
+                    <img class="w-7 h-7 object-contain" src="${awayLogo}" alt="${awayName}">
+                </div>
+                <div class="flex-1 text-left">
+                    <span class="block truncate font-medium">${awayName}</span>
+                </div>
+            </div>`;
+
+        return `
+            <div class="min-w-[450px] bg-gray-50 rounded-lg p-4 ${isComplete ? 'border border-green-200' : 'border border-gray-100'}" data-match-complete="${isComplete}" data-match-id="${matchId}">
+                <div class="flex gap-2 items-center">
+                    ${leftCol}
+                    ${middleCol}
+                    ${rightCol}
+                </div>
+            </div>`;
     },
 
     /**
@@ -72,11 +93,10 @@ export const UIRenderer = {
     },
 
     /**
-     * Renders the standings table based on the current state.standings.
-     * Handles both fixed and scrollable columns. If the previous standings
-     * are stored, it also applies position changes (up, down, or none) to
-     * the rendered rows.
-     * @public
+     * Renders the Standings table by delegating to UIRenderer.renderStandings.
+     * It populates the table with the current sorted standings list and animates the rows that
+     * changed position using FLIP animation.
+     * @private
      */
     renderStandings() {
         try {
@@ -89,50 +109,65 @@ export const UIRenderer = {
             const standings = Array.isArray(state && state.standings) ? state.standings : [];
             const sorted = StandingsCalculator.sortStandings(standings || []);
             const previous = state.previousStandings || [];
+            // Compute position changes, but allow suppression on initial load/reset
             const rawChanges = StandingsCalculator.getPositionChanges(sorted, previous);
 
-            // Only show indicators for teams that actually moved
+            // If DataManager requested to skip indicators (first render after load/reset), do not expose changes
             const visibleChanges = {};
-            Object.keys(rawChanges).forEach(id => {
-                const ch = rawChanges[id];
-                if (!ch) return;
-                if (ch.direction !== 'none') visibleChanges[id] = ch;
-            });
+            if (!state._skipStandingsIndicators) {
+                Object.keys(rawChanges).forEach(id => {
+                    const ch = rawChanges[id];
+                    if (!ch) return;
+                    visibleChanges[id] = ch;
+                });
+            }
+
+            // Capture previous DOM positions for FLIP animation
+            const prevPositions = {};
+            try {
+                const prevFixed = fixedBody.querySelectorAll('tr[data-team-id]');
+                prevFixed.forEach(r => {
+                    const id = r.getAttribute('data-team-id');
+                    if (id) prevPositions[id] = r.getBoundingClientRect().top;
+                });
+                const prevScroll = scrollBody.querySelectorAll('tr[data-team-id]');
+                prevScroll.forEach(r => {
+                    const id = r.getAttribute('data-team-id');
+                    if (id) prevPositions[id] = r.getBoundingClientRect().top;
+                });
+            } catch (err) {
+                // ignore measurement errors
+            }
 
             fixedBody.innerHTML = '';
             scrollBody.innerHTML = '';
 
-            sorted.forEach(team => {
-                // team here may be a standings object with stats and id only; get canonical metadata
-                const canonical = TeamService.getTeamById(team.id, state) || team;
-                // determine position change indicator for this team (only visibleChanges are shown)
-                const change = (visibleChanges && visibleChanges[team.id]) || null;
-                let changeIndicator = '';
-                if (change) {
-                    if (change.direction === 'up') {
-                        changeIndicator = `<span class="change-indicator absolute w-4 h-4 flex items-center justify-center text-green-600 font-bold" title="Subiu ${change.positionsChanged} posição(ões)" aria-hidden="true">↑</span>`;
-                    } else if (change.direction === 'down') {
-                        changeIndicator = `<span class="change-indicator absolute w-4 h-4 flex items-center justify-center text-red-600 font-bold" title="Desceu ${change.positionsChanged} posição(ões)" aria-hidden="true">↓</span>`;
-                    } else if (change.direction === 'none') {
-                        changeIndicator = `<span class="change-indicator absolute w-4 h-4 flex items-center justify-center text-gray-400 font-bold" title="Manteve a posição" aria-hidden="true">-</span>`;
-                    }
-                }
+            // Helper: build the small change indicator HTML
+            const buildChangeIndicator = (change) => {
+                if (!change) return '';
+                if (change.direction === 'up') return `<span class="change-indicator absolute w-4 h-4 flex items-center justify-center text-green-600 font-bold" title="Subiu ${change.positionsChanged} posição(ões)" aria-hidden="true">↑</span>`;
+                if (change.direction === 'down') return `<span class="change-indicator absolute w-4 h-4 flex items-center justify-center text-red-600 font-bold" title="Desceu ${change.positionsChanged} posição(ões)" aria-hidden="true">↓</span>`;
+                if (change.direction === 'none' && change.simulated === true) return `<span class="change-indicator absolute w-4 h-4 flex items-center justify-center text-gray-400 font-bold" title="Manteve a posição" aria-hidden="true">-</span>`;
+                return '';
+            };
 
-                // Fixed columns: position, team (logo + name), points
-                const fixedRow = document.createElement('tr');
-                fixedRow.classList.add('h-12', 'border-b', 'grid', 'grid-cols-[15%_70%_15%]');
-                fixedRow.innerHTML = `
+            // Helper: create the fixed (left) row
+            const createFixedRow = (team, canonical, changeIndicatorHtml) => {
+                const row = document.createElement('tr');
+                row.classList.add('h-12', 'border-b', 'grid', 'grid-cols-[15%_70%_15%]');
+                row.setAttribute('data-team-id', String(team.id));
+                row.innerHTML = `
                     <td class="flex items-center justify-center content-center relative">
                         <span class="px-2 py-1 rounded-full text-xs font-medium bg-gray-100">${team.position}</span>
                     </td>
                     <td class="flex items-center content-center gap-2">
                         <div class="relative w-2 h-6 flex items-center justify-center" aria-hidden="true">
-                            ${changeIndicator}
+                            ${changeIndicatorHtml}
                         </div>
                         <div class="flex items-center gap-2" data-team-name="${canonical.name || team.name || ''}">
                             <div class="hidden sm:flex team-logo">
-                                    <img class="w-7 h-7 object-contain" src="${TeamService.getTeamLogo(canonical, state)}" alt="${canonical.name || ''}">
-                                </div>
+                                <img class="w-7 h-7 object-contain" src="${TeamService.getTeamLogo(canonical, state)}" alt="${canonical.name || ''}">
+                            </div>
                             <div>
                                 ${canonical.name || team.name || ''}
                             </div>
@@ -142,12 +177,15 @@ export const UIRenderer = {
                         ${team.points}
                     </td>
                 `;
-                fixedBody.appendChild(fixedRow);
+                return row;
+            };
 
-                // Scrollable columns: games, wins, draws, losses, gp, gc, sg
-                const scrollRow = document.createElement('tr');
-                scrollRow.classList.add('h-12', 'border-b', 'grid', 'grid-cols-7');
-                scrollRow.innerHTML = `
+            // Helper: create the scrollable (right) row
+            const createScrollRow = (team) => {
+                const row = document.createElement('tr');
+                row.classList.add('h-12', 'border-b', 'grid', 'grid-cols-7');
+                row.setAttribute('data-team-id', String(team.id));
+                row.innerHTML = `
                     <td class="text-center content-center">${team.games || 0}</td>
                     <td class="text-center content-center">${team.draws || 0}</td>
                     <td class="text-center content-center">${team.victories || 0}</td>
@@ -156,11 +194,34 @@ export const UIRenderer = {
                     <td class="text-center content-center">${team.goal_against || 0}</td>
                     <td class="text-center content-center ${team.balance_goals >= 0 ? 'text-green-600' : 'text-red-600'}">${team.balance_goals >= 0 ? '+' : ''}${team.balance_goals || 0}</td>
                 `;
-                scrollBody.appendChild(scrollRow);
+                return row;
+            };
+
+            // Render rows using helpers
+            sorted.forEach(team => {
+                const canonical = TeamService.getTeamById(team.id, state) || team;
+                const change = (visibleChanges && visibleChanges[team.id]) || null;
+                const changeIndicatorHtml = buildChangeIndicator(change);
+
+                fixedBody.appendChild(createFixedRow(team, canonical, changeIndicatorHtml));
+                scrollBody.appendChild(createScrollRow(team));
             });
+
+                // After rendering, animate rows that changed position using FLIP
+                try {
+                    Utils.animateFLIP(fixedBody, prevPositions);
+                    Utils.animateFLIP(scrollBody, prevPositions);
+                } catch (err) {
+                    // ignore animation errors
+                }
 
             // After rendering, update previous standings snapshot to the new sorted list
             state.previousStandings = JSON.parse(JSON.stringify(sorted || []));
+
+            // Clear the transient skip flag so future renders will show indicators
+            if (state._skipStandingsIndicators) {
+                state._skipStandingsIndicators = false;
+            }
 
             // Trigger a brief animation for visible indicators, then remove the animation class so it doesn't loop forever
             setTimeout(() => {

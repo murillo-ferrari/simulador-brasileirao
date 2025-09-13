@@ -59,6 +59,8 @@ export const DataManager = {
 			state.standings = state.initialStandings.map(team => TeamService.ensureTeamStats(team));
 			// initialize previousStandings snapshot
 			state.previousStandings = JSON.parse(JSON.stringify(state.standings || []));
+			// Suppress change indicators on the immediate next standings render
+			state._skipStandingsIndicators = true;
 			// Store the date for each round in allMatches as a property
 			state.allMatches = Object.keys(roundFixtures).reduce((acc, round) => {
 				const matches = roundFixtures[round].matches.map(MatchService.initializeMatch);

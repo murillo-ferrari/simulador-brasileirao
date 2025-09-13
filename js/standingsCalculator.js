@@ -154,18 +154,50 @@ export const StandingsCalculator = {
         oldStandings.forEach((team) => {
             oldPositions[team.id] = team.position;
         });
+
+        // Prepare a set of simulated match ids for quick lookup
+        const simulatedMatchIds = new Set();
+        try {
+            if (state && state.simulatedMatches && typeof state.simulatedMatches.forEach === 'function') {
+                state.simulatedMatches.forEach((v, k) => simulatedMatchIds.add(String(k)));
+            }
+        } catch (err) {
+            // ignore
+        }
         newStandings.forEach((team) => {
             const oldPosition = oldPositions[team.id];
             if (oldPosition !== undefined) {
+                // determine if this team was involved in any simulated match
+                let simulatedAffected = false;
+                try {
+                    if (simulatedMatchIds.size > 0 && state && Array.isArray(state.matches)) {
+                        for (const mid of simulatedMatchIds) {
+                            const m = state.matches.find(x => String(x.id) === String(mid));
+                            if (m) {
+                                const hid = m.homeTeam && m.homeTeam.id;
+                                const aid = m.awayTeam && m.awayTeam.id;
+                                if (String(hid) === String(team.id) || String(aid) === String(team.id)) {
+                                    simulatedAffected = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                } catch (err) {
+                    simulatedAffected = false;
+                }
+
                 if (team.position !== oldPosition) {
                     changes[team.id] = {
                         direction: team.position < oldPosition ? "up" : "down",
                         positionsChanged: Math.abs(team.position - oldPosition),
+                        simulated: simulatedAffected,
                     };
                 } else {
                     changes[team.id] = {
                         direction: "none",
                         positionsChanged: 0,
+                        simulated: simulatedAffected,
                     };
                 }
             }
