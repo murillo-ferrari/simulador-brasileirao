@@ -14,7 +14,8 @@ export const state = {
 	simulatedMatches: new Map(),
 	allMatches: {},
 	initialStandings: [],
-	previousStandings: []
+	previousStandings: [],
+	teams: []
 };
 
 // DataManager handles loading and resetting data 
@@ -31,9 +32,10 @@ export const DataManager = {
 	 */
 	async loadData() {
 		try {
-			const [standingsRes, fixturesRes] = await Promise.all([
+			const [standingsRes, fixturesRes, teamsRes] = await Promise.all([
 				fetch('data/initial_standings.json'),
-				fetch('data/round_fixtures.json')
+				fetch('data/round_fixtures.json'),
+				fetch('data/teams.json')
 			]);
 			if (!standingsRes.ok || !fixturesRes.ok) {
 				console.error('DataManager: fetch failed', standingsRes.status, fixturesRes.status);
@@ -41,6 +43,18 @@ export const DataManager = {
 			}
 			const initialStandings = await standingsRes.json();
 			const roundFixtures = await fixturesRes.json();
+			let teamsList = [];
+			if (teamsRes && teamsRes.ok) {
+				try {
+					teamsList = await teamsRes.json();
+				} catch (err) {
+					console.warn('DataManager: failed to parse teams.json', err);
+					teamsList = [];
+				}
+			} else {
+				teamsList = [];
+			}
+			state.teams = teamsList || [];
 			state.initialStandings = Utils.deepClone(initialStandings);
 			state.standings = state.initialStandings.map(team => TeamService.ensureTeamStats(team));
 			// initialize previousStandings snapshot

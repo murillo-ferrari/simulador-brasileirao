@@ -1,4 +1,6 @@
 import { Utils } from "./utils.js";
+import { TeamService } from './teamService.js';
+import { state } from './dataManager.js';
 
 // Standings calculation and sorting
 export const StandingsCalculator = {
@@ -82,7 +84,16 @@ export const StandingsCalculator = {
                 const bGoalsAgainst = b.goal_against || 0;
                 if (aGoalsAgainst !== bGoalsAgainst)
                     return aGoalsAgainst - bGoalsAgainst;
-                return a.name.localeCompare(b.name);
+                // Tie-breaker by canonical team name
+                try {
+                    const aMeta = TeamService.getTeamById(a.id, state) || a;
+                    const bMeta = TeamService.getTeamById(b.id, state) || b;
+                    const aName = (aMeta && aMeta.name) ? aMeta.name : (a.name || '');
+                    const bName = (bMeta && bMeta.name) ? bMeta.name : (b.name || '');
+                    return aName.localeCompare(bName);
+                } catch (err) {
+                    return (a.name || '').localeCompare(b.name || '');
+                }
             })
             .map((team, index) => ({ ...team, position: index + 1 }));
     },

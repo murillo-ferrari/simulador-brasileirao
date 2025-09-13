@@ -32,23 +32,23 @@ export const UIRenderer = {
                 <div class="flex gap-2 items-center">
                     <div class="flex min-w-[9.375rem] items-center justify-between gap-2">
                         <div class="flex-1 text-right">
-                            <span class="block truncate font-medium">${homeTeam.name}</span>
+                            <span class="block truncate font-medium">${homeTeam.name || match.homeTeam.name || ''}</span>
                         </div>
                         <div class="flex items-center justify-end">
-                            <img class="w-7 h-7 object-contain" src="${TeamService.getTeamLogo(homeTeam)}" alt="${homeTeam.name}">
+                            <img class="w-7 h-7 object-contain" src="${TeamService.getTeamLogo(homeTeam, state)}" alt="${homeTeam.name || ''}">
                         </div>
                     </div>
                     <div class="flex items-center content-center gap-2">
-                        <input type="number" min="0" max="${CONFIG.MAX_GOALS}" value="${match.homeScore ?? ''}" id="home-score-${matchId}" data-match-id="${matchId}" data-field="homeScore" class="match-input w-12 h-8 text-center border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" aria-label="Placar do ${homeTeam.name}">
+                        <input type="number" min="0" max="${CONFIG.MAX_GOALS}" value="${match.homeScore ?? ''}" id="home-score-${matchId}" data-match-id="${matchId}" data-field="homeScore" class="match-input w-12 h-8 text-center border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" aria-label="Placar do ${homeTeam.name || ''}">
                         <span aria-hidden="true">×</span>
-                        <input type="number" min="0" max="${CONFIG.MAX_GOALS}" value="${match.awayScore ?? ''}" id="away-score-${matchId}" data-match-id="${matchId}" data-field="awayScore" class="match-input w-12 h-8 text-center border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" aria-label="Placar do ${awayTeam.name}">
+                        <input type="number" min="0" max="${CONFIG.MAX_GOALS}" value="${match.awayScore ?? ''}" id="away-score-${matchId}" data-match-id="${matchId}" data-field="awayScore" class="match-input w-12 h-8 text-center border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" aria-label="Placar do ${awayTeam.name || ''}">
                     </div>
                     <div class="flex min-w-[9.375rem] items-center justify-between gap-2">
                         <div class="flex items-center">
-                            <img class="w-7 h-7 object-contain" src="${TeamService.getTeamLogo(awayTeam)}" alt="${awayTeam.name}">
+                            <img class="w-7 h-7 object-contain" src="${TeamService.getTeamLogo(awayTeam, state)}" alt="${awayTeam.name || ''}">
                         </div>
                         <div class="flex-1 text-left">
-                            <span class="block truncate font-medium">${awayTeam.name}</span>
+                            <span class="block truncate font-medium">${awayTeam.name || match.awayTeam.name || ''}</span>
                         </div>
                     </div>
                 </div>
@@ -103,6 +103,8 @@ export const UIRenderer = {
             scrollBody.innerHTML = '';
 
             sorted.forEach(team => {
+                // team here may be a standings object with stats and id only; get canonical metadata
+                const canonical = TeamService.getTeamById(team.id, state) || team;
                 // determine position change indicator for this team (only visibleChanges are shown)
                 const change = (visibleChanges && visibleChanges[team.id]) || null;
                 let changeIndicator = '';
@@ -127,12 +129,12 @@ export const UIRenderer = {
                         <div class="relative w-2 h-6 flex items-center justify-center" aria-hidden="true">
                             ${changeIndicator}
                         </div>
-                        <div class="flex items-center gap-2" data-team-name="${team.name}">
+                        <div class="flex items-center gap-2" data-team-name="${canonical.name || team.name || ''}">
                             <div class="hidden sm:flex team-logo">
-                                    <img class="w-7 h-7 object-contain" src="${TeamService.getTeamLogo(team)}" alt="${team.name}">
+                                    <img class="w-7 h-7 object-contain" src="${TeamService.getTeamLogo(canonical, state)}" alt="${canonical.name || ''}">
                                 </div>
                             <div>
-                                ${team.name}
+                                ${canonical.name || team.name || ''}
                             </div>
                         </div>
                     </td>

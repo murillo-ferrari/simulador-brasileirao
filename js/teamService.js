@@ -8,17 +8,49 @@ export const TeamService = {
      * @returns {object|null} - team object matching the given id or name, or null
      */
     getTeamById(id, state) {
-        if (!state || !Array.isArray(state.standings)) return null;
-        return state.standings.find(team => team.id === id || team.name === id);
+        if (!state) return null;
+        // Try canonical teams list first
+        if (Array.isArray(state.teams)) {
+            const found = state.teams.find(team => team.id === id || team.name === id);
+            if (found) {
+                // merge with standings stats if available
+                if (Array.isArray(state.standings)) {
+                    const standing = state.standings.find(s => s.id === id);
+                    return standing ? { ...found, ...standing } : { ...found };
+                }
+                return { ...found };
+            }
+        }
+        // Fallback to standings-only entry (may lack metadata but contains stats)
+        if (Array.isArray(state.standings)) {
+            const st = state.standings.find(team => team.id === id || team.name === id);
+            return st || null;
+        }
+        return null;
     },
 
+
     /**
-     * Returns the URL of the team's logo.
-     * @param {object} team - team
-     * @returns {string} - URL of the team's logo
+     * Returns the logo URL of a team given its id or name.
+     * If the team is not found in the state, it returns an empty string.
+     * If the team does not have an image, it returns an empty string.
+     * @param {(number|string)} teamOrId - id or name of the team
+     * @param {object} state - state object containing Standing
+     * @returns {string} - the logo URL of the team, or an empty string if not found
      */
-    getTeamLogo(team) {
-        return team && team.image ? team.image : '';
+    getTeamLogo(teamOrId, state) {
+        if (!teamOrId) return '';
+        let teamObj = null;
+        if (typeof teamOrId === 'number' || typeof teamOrId === 'string') {
+            if (!state) return '';
+            teamObj = this.getTeamById(Number(teamOrId), state) || this.getTeamById(teamOrId, state);
+        } else {
+            teamObj = teamOrId;
+            if ((!teamObj || !teamObj.image) && state && teamObj && teamObj.id) {
+                teamObj = this.getTeamById(teamObj.id, state) || teamObj;
+            }
+        }
+        return teamObj && teamObj.image ? teamObj.image : '';
     },
 
     /**
