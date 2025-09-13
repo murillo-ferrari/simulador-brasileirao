@@ -62,12 +62,14 @@ export const Utils = {
      * @param {HTMLElement} container The container element containing the rows to animate.
      * @param {object} prevPositions An object with team id as key and previous row top position as value.
      */
-    animateFLIP(container, prevPositions) {
+    animateFLIP(container, prevPositions, changedIds = null) {
         if (!container || !prevPositions) return;
         try {
             const rows = container.querySelectorAll('tr[data-team-id]');
             rows.forEach(row => {
                 const id = row.getAttribute('data-team-id');
+                // If a set of changed IDs is provided, skip rows that didn't change
+                if (changedIds && !changedIds.has(id)) return;
                 const prevTop = prevPositions[id];
                 if (typeof prevTop === 'number') {
                     const newTop = row.getBoundingClientRect().top;

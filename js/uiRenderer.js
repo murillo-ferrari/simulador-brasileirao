@@ -216,8 +216,8 @@ export const UIRenderer = {
                 const fixedRow = createFixedRow(team, canonical, changeIndicatorHtml);
                 const scrollRow = createScrollRow(team);
 
-                // If user prefers compact view, hide middle rows (only top/bottom kept)
-                const compact = !!state.compactTable;
+                // Determine effective compact mode: only apply compact on small viewports
+                const compact = !!state.compactTable && window.innerWidth < 768;
                 const topCount = 4;
                 const bottomCount = 4;
                 const show = !compact || idx < topCount || idx >= sorted.length - bottomCount;
@@ -232,8 +232,10 @@ export const UIRenderer = {
 
                 // After rendering, animate rows that changed position using FLIP
                 try {
-                    Utils.animateFLIP(fixedBody, prevPositions);
-                    Utils.animateFLIP(scrollBody, prevPositions);
+                    // build a set of team ids that actually changed position (visibleChanges)
+                    const changedIds = new Set(Object.keys(visibleChanges || {}));
+                    Utils.animateFLIP(fixedBody, prevPositions, changedIds);
+                    Utils.animateFLIP(scrollBody, prevPositions, changedIds);
                 } catch (err) {
                     // ignore animation errors
                 }

@@ -125,15 +125,18 @@ function setupEventListeners() {
 	// Reflect current stored preference on buttons
 	UIManager.updateCompactButtons();
 
-	// Ensure full table when switching to desktop
+	// Reapply stored compact state when entering mobile viewport only.
+	let lastWasMobile = window.innerWidth < 768;
 	window.addEventListener('resize', () => {
-		if (window.innerWidth >= 768) {
-			// Force full table on desktop temporarily (do not overwrite user preference)
-			UIManager.toggleCompact(false, false);
-		} else {
-			// On small viewports, reapply user's stored preference if set
+		const isMobile = window.innerWidth < 768;
+		if (isMobile && !lastWasMobile) {
+			// just entered mobile; apply stored preference (no persistence)
 			if (state && state.compactTable) UIManager.toggleCompact(true, false);
+		} else if (!isMobile && lastWasMobile) {
+			// just entered desktop; ensure full table is visible (do not overwrite stored preference)
+			UIManager.toggleCompact(false, false);
 		}
+		lastWasMobile = isMobile;
 	});
 }
 
@@ -180,10 +183,14 @@ export const UIManager = {
 	 */
 	renderStandings() {
 		UIRenderer.renderStandings();
-		// Reapply user's compact table preference after rendering (do not persist this reapplication)
+		// Reapply user's compact table preference after rendering, but only when
+		// on small viewports. On desktop we respect a full-table view even if the
+		// user previously chose compact on mobile.
 		if (state && typeof state.compactTable !== 'undefined') {
+			const isMobile = window.innerWidth < 768;
+			const effectiveCompact = !!state.compactTable && isMobile;
 			// Reapply without animation to avoid flicker when standings change
-			UIManager.toggleCompact(!!state.compactTable, false, false);
+			UIManager.toggleCompact(effectiveCompact, false, false);
 			UIManager.updateCompactButtons();
 		}
 	},
@@ -193,8 +200,11 @@ export const UIManager = {
 	 */
 	updateCompactButtons() {
 		refreshElements();
-		if (elements.compactTableBtn) elements.compactTableBtn.classList.toggle('active', !!state.compactTable);
-		if (elements.fullTableBtn) elements.fullTableBtn.classList.toggle('active', !state.compactTable);
+		// Buttons should reflect the effective compact state (consider viewport)
+		const isMobile = window.innerWidth < 768;
+		const effectiveCompact = !!state.compactTable && isMobile;
+		if (elements.compactTableBtn) elements.compactTableBtn.classList.toggle('active', effectiveCompact);
+		if (elements.fullTableBtn) elements.fullTableBtn.classList.toggle('active', !effectiveCompact);
 	},
 
 	/**
@@ -301,6 +311,10 @@ export const UIManager = {
 	 */
 	toggleCompact(compact, persist = true, animate = true) {
 		refreshElements();
+		// Only apply compact behavior on small viewports. On desktop we always
+		// show the full table (but we still persist the user's mobile choice).
+		const isMobile = window.innerWidth < 768;
+		const applyCompact = isMobile && !!compact;
 		const fixedBody = elements.standingsFixedBody || document.getElementById('standings-fixed-body');
 		const scrollBody = elements.standingsScrollBody || document.getElementById('standings-scroll-body');
 		if (!fixedBody || !scrollBody) return;
@@ -326,7 +340,8 @@ export const UIManager = {
 
 		// operate on each body independently so mismatched row counts don't cause wrong hiding
 		for (let i = 0; i < fixedLen; i++) {
-			const showFixed = !compact || i < topCount || i >= fixedLen - bottomCount;
+			// when applyCompact is false, showFixed will always be true
+			const showFixed = !applyCompact || i < topCount || i >= fixedLen - bottomCount;
 			const fr = fixedRows[i];
 			if (showFixed) {
 				if (fr && fr.style.display === 'none') expandRow(fr);
@@ -336,7 +351,7 @@ export const UIManager = {
 		}
 
 		for (let i = 0; i < scrollLen; i++) {
-			const showScroll = !compact || i < topCount || i >= scrollLen - bottomCount;
+			const showScroll = !applyCompact || i < topCount || i >= scrollLen - bottomCount;
 			const sr = scrollRows[i];
 			if (showScroll) {
 				if (sr && sr.style.display === 'none') expandRow(sr);
@@ -347,6 +362,8 @@ export const UIManager = {
 
 		// persist user's choice in application state if requested
 		if (persist) {
+			// persist the user's choice (mobile preference) but do not force it
+			// to apply on desktop — applyCompact already handles that.
 			state.compactTable = !!compact;
 			// update visual state
 			UIManager.updateCompactButtons();
