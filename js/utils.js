@@ -49,5 +49,47 @@ export const Utils = {
             clearTimeout(timeout);
             timeout = setTimeout(later, wait);
         };
+    },
+
+    /**
+     * Animates the FLIP (First-Layout-In-Paint) effect for the given container,
+     * by comparing the current position of each row with the previous position
+     * stored in `prevPositions`.
+     * This function is used to animate the reordering of rows in a table
+     * when the data changes.
+     * @param {HTMLElement} container The container element containing the rows to animate.
+     * @param {object} prevPositions An object with team id as key and previous row top position as value.
+     */
+    animateFLIP(container, prevPositions) {
+        if (!container || !prevPositions) return;
+        try {
+            const rows = container.querySelectorAll('tr[data-team-id]');
+            rows.forEach(row => {
+                const id = row.getAttribute('data-team-id');
+                const prevTop = prevPositions[id];
+                if (typeof prevTop === 'number') {
+                    const newTop = row.getBoundingClientRect().top;
+                    const delta = prevTop - newTop;
+                    if (delta) {
+                        row.style.transition = 'none';
+                        row.style.transform = `translateY(${delta}px)`;
+                        row.style.willChange = 'transform';
+                        requestAnimationFrame(() => {
+                            row.style.transition = 'transform 330ms cubic-bezier(.2,.8,.2,1)';
+                            row.style.transform = '';
+                            const cleanup = () => {
+                                row.style.transition = '';
+                                row.style.transform = '';
+                                row.style.willChange = '';
+                                row.removeEventListener('transitionend', cleanup);
+                            };
+                            row.addEventListener('transitionend', cleanup);
+                        });
+                    }
+                }
+            });
+        } catch (err) {
+            // swallow animation errors to avoid breaking rendering
+        }
     }
 };
