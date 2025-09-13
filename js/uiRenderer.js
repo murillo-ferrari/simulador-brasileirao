@@ -31,6 +31,8 @@ export const UIRenderer = {
 
         const homeName = homeMeta.name || match.homeTeam?.name || '';
         const awayName = awayMeta.name || match.awayTeam?.name || '';
+        const homeAcronym = homeMeta.acronym || match.homeTeam?.acronym || '';
+        const awayAcronym = awayMeta.acronym || match.awayTeam?.acronym || '';
         const homeLogo = TeamService.getTeamLogo(homeMeta, state) || '';
         const awayLogo = TeamService.getTeamLogo(awayMeta, state) || '';
 
@@ -39,12 +41,12 @@ export const UIRenderer = {
 
         // Left column: home team (name right-aligned, logo to the left of the center)
         const leftCol = `
-            <div class="flex min-w-[9.375rem] items-center justify-between gap-2">
-                <div class="flex-1 text-right">
-                    <span class="block truncate font-medium">${homeName}</span>
+            <div class="flex lg:min-w-[9.375rem] items-center justify-between gap-2">
+                    <div class="flex-1 text-right">
+                    <span class="block truncate font-medium"><span class="lg:hidden">${homeAcronym || homeName}</span><span class="hidden lg:inline">${homeName}</span></span>
                 </div>
                 <div class="flex items-center justify-end">
-                    <img class="w-7 h-7 object-contain" src="${homeLogo}" alt="${homeName}">
+                    <img class="w-7 h-7 object-contain flex-shrink-0" src="${homeLogo}" alt="${homeName}">
                 </div>
             </div>`;
 
@@ -58,18 +60,18 @@ export const UIRenderer = {
 
         // Right column: away team (logo then name)
         const rightCol = `
-            <div class="flex min-w-[9.375rem] items-center justify-between gap-2">
+            <div class="flex lg:min-w-[9.375rem] items-center justify-between gap-2">
                 <div class="flex items-center">
-                    <img class="w-7 h-7 object-contain" src="${awayLogo}" alt="${awayName}">
+                    <img class="w-7 h-7 object-contain flex-shrink-0" src="${awayLogo}" alt="${awayName}">
                 </div>
                 <div class="flex-1 text-left">
-                    <span class="block truncate font-medium">${awayName}</span>
+                    <span class="block truncate font-medium"><span class="lg:hidden">${awayAcronym || awayName}</span><span class="hidden lg:inline">${awayName}</span></span>
                 </div>
             </div>`;
 
         return `
-            <div class="min-w-[450px] bg-gray-50 rounded-lg p-4 ${isComplete ? 'border border-green-200' : 'border border-gray-100'}" data-match-complete="${isComplete}" data-match-id="${matchId}">
-                <div class="flex gap-2 items-center">
+            <div class="lg:min-w-[450px] bg-gray-50 rounded-lg p-4 ${isComplete ? 'border border-green-200' : 'border border-gray-100'}" data-match-complete="${isComplete}" data-match-id="${matchId}">
+                <div class="flex gap-2 items-center justify-center">
                     ${leftCol}
                     ${middleCol}
                     ${rightCol}
@@ -165,11 +167,12 @@ export const UIRenderer = {
                             ${changeIndicatorHtml}
                         </div>
                         <div class="flex items-center gap-2" data-team-name="${canonical.name || team.name || ''}">
-                            <div class="hidden sm:flex team-logo">
-                                <img class="w-7 h-7 object-contain" src="${TeamService.getTeamLogo(canonical, state)}" alt="${canonical.name || ''}">
+                            <div class="flex team-logo">
+                                <img class="w-7 h-7 object-contain flex-shrink-0" src="${TeamService.getTeamLogo(canonical, state)}" alt="${canonical.name || ''}">
                             </div>
                             <div>
-                                ${canonical.name || team.name || ''}
+                                <span class="lg:hidden">${canonical.acronym || team.acronym || canonical.name || team.name || ''}</span>
+                                <span class="hidden lg:inline">${canonical.name || team.name || ''}</span>
                             </div>
                         </div>
                     </td>
