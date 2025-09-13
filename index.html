@@ -10,6 +10,13 @@
 </head>
 
 <body class="bg-gray-50">
+    <!-- Loading Overlay (moved to top so it displays before page content) -->
+    <div id="loading" class="fixed inset-0 bg-white bg-opacity-95 flex flex-col items-center justify-center gap-4 z-[9999]"
+        data-section="loading-overlay">
+        <div class="w-12 h-12 border-4 border-gray-200 border-t-green-500 rounded-full animate-spin"></div>
+        <p>Carregando classificação...</p>
+    </div>
+
     <!-- Main Container -->
     <div class="flex justify-center content-center flex-col min-h-screen md:flex-row max-w-[1200px] mx-auto" data-section="main-container">
         <!-- Standings Section -->
@@ -115,23 +122,17 @@
         </div>
     </div>
 
-    <!-- Loading Overlay -->
-    <div id="loading" class="fixed inset-0 bg-white bg-opacity-80 flex flex-col items-center justify-center gap-4"
-        style="display: none;" data-section="loading-overlay">
-        <div class="w-12 h-12 border-4 border-gray-200 border-t-green-500 rounded-full animate-spin"></div>
-        <p>Carregando classificação...</p>
-    </div>
-
-    <!-- External scripts (entrypoint as ES module) -->
-    <script type="module" src="js/main.js"></script>
     <!-- Floating action bar: moved from header for better mobile UX -->
     <div id="floating-actions" class="fixed left-0 right-0 bottom-4 flex justify-center pointer-events-none z-50">
-        <div class="bg-white rounded-full shadow-lg px-4 py-2 flex items-center gap-2 pointer-events-auto">
+        <div class="bg-white border border-gray-200 rounded-full shadow-lg px-4 py-2 flex items-center gap-2 pointer-events-auto">
             <button id="simulate-round" class="p-2 rounded-md border text-white bg-blue-600 border-blue-600 hover:bg-blue-700 transition">Simular</button>
             <button id="clear-round" class="p-2 rounded-md border text-white bg-red-500 border-red-500 hover:bg-red-600 transition">Limpar</button>
             <button id="reset-championship" class="p-2 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 transition">Reiniciar</button>
         </div>
     </div>
+    
+    <!-- External scripts (entrypoint as ES module) -->
+    <script type="module" src="js/main.js"></script>
 </body>
 
 </html>

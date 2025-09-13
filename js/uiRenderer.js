@@ -43,7 +43,7 @@ export const UIRenderer = {
         const leftCol = `
             <div class="flex lg:min-w-[9.375rem] items-center justify-between gap-2">
                     <div class="flex-1 text-right">
-                    <span class="block truncate font-medium"><span class="lg:hidden">${homeAcronym || homeName}</span><span class="hidden lg:inline">${homeName}</span></span>
+                    <span class="block truncate font-medium text-lg"><span class="lg:hidden">${homeAcronym || homeName}</span><span class="hidden lg:inline">${homeName}</span></span>
                 </div>
                 <div class="flex items-center justify-end">
                     <img class="w-7 h-7 object-contain flex-shrink-0" src="${homeLogo}" alt="${homeName}">
@@ -65,7 +65,7 @@ export const UIRenderer = {
                     <img class="w-7 h-7 object-contain flex-shrink-0" src="${awayLogo}" alt="${awayName}">
                 </div>
                 <div class="flex-1 text-left">
-                    <span class="block truncate font-medium"><span class="lg:hidden">${awayAcronym || awayName}</span><span class="hidden lg:inline">${awayName}</span></span>
+                    <span class="block truncate font-medium text-lg"><span class="lg:hidden">${awayAcronym || awayName}</span><span class="hidden lg:inline">${awayName}</span></span>
                 </div>
             </div>`;
 

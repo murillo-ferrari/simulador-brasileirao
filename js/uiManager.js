@@ -144,15 +144,34 @@ export const UIManager = {
 	 * @private
 	 */
 	showLoading() {
-		if (elements.loading) elements.loading.style.display = 'flex';
+		// Ensure we have up-to-date element references
+		refreshElements();
+		if (!elements.loading) return;
+		elements.loading.style.display = 'flex';
 	},
 
+	/**
+	 * Tries to refresh element references.
+	 * @private
+	 */
+	tryRefreshElements() {
+		try {
+			refreshElements();
+		} catch (e) {
+			// swallow: DOM may not be ready yet; callers will re-query as needed
+			console.debug('uiManager: initial refreshElements deferred', e);
+		}
+	},
+	
 	/**
 	 * Hides the loading overlay, if it exists.
 	 * @private
 	 */
 	hideLoading() {
-		if (elements.loading) elements.loading.style.display = 'none';
+		// Ensure we have up-to-date element references
+		refreshElements();
+		if (!elements.loading) return;
+		elements.loading.style.display = 'none';
 	},
 
 	/**
