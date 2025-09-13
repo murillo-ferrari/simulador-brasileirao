@@ -70,7 +70,7 @@ export const UIRenderer = {
             </div>`;
 
         return `
-            <div class="lg:min-w-[450px] bg-gray-50 rounded-lg p-4 ${isComplete ? 'border border-green-200' : 'border border-gray-100'}" data-match-complete="${isComplete}" data-match-id="${matchId}">
+            <div class="lg:min-w-[450px] md:min-w-[300px] bg-gray-50 rounded-lg p-4 ${isComplete ? 'border border-green-200' : 'border border-gray-100'}" data-match-complete="${isComplete}" data-match-id="${matchId}">
                 <div class="flex gap-2 items-center justify-center">
                     ${leftCol}
                     ${middleCol}

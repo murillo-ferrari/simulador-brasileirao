@@ -2,36 +2,45 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simulador do Campeonato Brasileiro - JS + Tailwind</title>
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-gray-50">
     <!-- Loading Overlay (moved to top so it displays before page content) -->
-    <div id="loading" class="fixed inset-0 bg-white bg-opacity-95 flex flex-col items-center justify-center gap-4 z-[9999]"
+    <div id="loading"
+        class="fixed inset-0 bg-white bg-opacity-95 flex flex-col items-center justify-center gap-4 z-[9999]"
         data-section="loading-overlay">
         <div class="w-12 h-12 border-4 border-gray-200 border-t-green-500 rounded-full animate-spin"></div>
         <p>Carregando classificação...</p>
     </div>
 
     <!-- Main Container -->
-    <div class="flex justify-center content-center flex-col min-h-screen md:flex-row max-w-[1200px] mx-auto" data-section="main-container">
+    <div class="flex justify-center content-center flex-col min-h-screen md:flex-row max-w-[1200px] mx-auto"
+        data-section="main-container">
         <!-- Standings Section -->
         <div class="p-4 overflow-y-auto" data-section="standings-section">
             <!-- Standings Card -->
             <div class="bg-white rounded-lg shadow overflow-hidden" data-section="standings-card">
                 <!-- Standings Header -->
-                <div class="flex flex-col items-center gap-2 p-4 border-b border-gray-200" data-section="standings-header">
-                    <h1 class="text-2xl font-bold">Classificação do Campeonato Brasileiro</h1>
+                <div class="flex flex-col items-center gap-2 p-4 border-b border-gray-200"
+                    data-section="standings-header">
+                    <h1 class="text-2xl font-bold">
+                        Classificação do Campeonato Brasileiro
+                    </h1>
                     <!-- Table Controls -->
                     <div class="flex items-center gap-2 md:hidden w-full justify-center" data-section="table-controls">
                         <button id="compact-table"
-                            class="p-2 rounded-md border bg-white text-gray-700 hover:bg-gray-200 transition">Tabela reduzida</button>
+                            class="p-2 rounded-md border bg-white text-gray-700 hover:bg-gray-200 transition">
+                            Tabela reduzida
+                        </button>
                         <button id="full-table"
-                            class="p-2 rounded-md border bg-white text-gray-700 hover:bg-gray-100 transition">Tabela Completa</button>
+                            class="p-2 rounded-md border bg-white text-gray-700 hover:bg-gray-100 transition">
+                            Tabela Completa
+                        </button>
                     </div>
                 </div>
                 <!-- Standings Table Wrapper -->
@@ -42,14 +51,16 @@
                         <table class="min-w-max border-collapse">
                             <thead>
                                 <tr class="h-10 border-b grid grid-cols-[15%_70%_15%]">
-                                    <th
-                                        class="bg-gray-50 text-xs font-medium text-gray-500 uppercase content-center">
-                                        </th>
+                                    <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase content-center">
+                                    </th>
                                     <th
                                         class="bg-gray-50 text-xs font-medium text-gray-500 uppercase content-center px-4 text-left">
-                                        Time</th>
+                                        Time
+                                    </th>
                                     <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase content-center"
-                                        id="points-header">PTS</th>
+                                        id="points-header">
+                                        PTS
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody id="standings-fixed-body">
@@ -64,25 +75,32 @@
                                 <tr class="h-10 border-b grid grid-cols-7">
                                     <th
                                         class="bg-gray-50 text-xs font-medium text-gray-500 uppercase px-4 content-center">
-                                        J</th>
+                                        J
+                                    </th>
                                     <th
                                         class="bg-gray-50 text-xs font-medium text-gray-500 uppercase px-4 content-center">
-                                        V</th>
+                                        V
+                                    </th>
                                     <th
                                         class="bg-gray-50 text-xs font-medium text-gray-500 uppercase px-4 content-center">
-                                        E</th>
+                                        E
+                                    </th>
                                     <th
                                         class="bg-gray-50 text-xs font-medium text-gray-500 uppercase px-4 content-center">
-                                        D</th>
+                                        D
+                                    </th>
                                     <th
                                         class="bg-gray-50 text-xs font-medium text-gray-500 uppercase px-4 content-center">
-                                        GP</th>
+                                        GP
+                                    </th>
                                     <th
                                         class="bg-gray-50 text-xs font-medium text-gray-500 uppercase px-4 content-center">
-                                        GC</th>
+                                        GC
+                                    </th>
                                     <th
                                         class="bg-gray-50 text-xs font-medium text-gray-500 uppercase px-4 content-center">
-                                        SG</th>
+                                        SG
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="overflow-x-auto flex-1 w-full" id="standings-scroll-body">
@@ -91,49 +109,57 @@
                         </table>
                     </div>
                 </div>
-            
-
-            <!-- Standings Legend -->
-            <div class="p-4" data-section="standings-legend" aria-label="Legenda da classificação">
-                <div class="flex flex-wrap items-center justify-center gap-4 text-sm text-gray-700 w-full">
-                    <div class="items-center justify-center gap-2 min-w-[130px]">
-                        <span class="inline-flex items-center justify-center px-1 py-1/2 rounded-full bg-green-100 text-green-800 text-xs font-semibold"> </span>
-                        <span class="text-xs">Libertadores</span>
-                    </div>
-                    <div class="items-center justify-center gap-2 min-w-[130px]">
-                        <span class="inline-flex items-center justify-center px-1 py-1/2 rounded-full bg-blue-100 text-blue-800 text-xs font-semibold"> </span>
-                        <span class="text-xs">Pré-libertadores</span>
-                    </div>
-                    <div class="items-center justify-center gap-2 min-w-[130px]">
-                        <span class="inline-flex items-center justify-center px-1 py-1/2 rounded-full bg-orange-100 text-orange-800 text-xs font-semibold"> </span>
-                        <span class="text-xs">Sulamericana</span>
-                    </div>
-                    <div class="items-center justify-center gap-2 min-w-[130px]">
-                        <span class="inline-flex items-center justify-center px-1 py-1/2 rounded-full bg-red-100 text-red-800 text-xs font-semibold"> </span>
-                        <span class="text-xs">Rebaixamento</span>
+                <!-- Standings Legend -->
+                <div class="p-4" data-section="standings-legend" aria-label="Legenda da classificação">
+                    <div class="flex flex-wrap items-center justify-center gap-4 text-sm text-gray-700 w-full">
+                        <div class="items-center justify-center gap-2 min-w-[130px]">
+                            <span
+                                class="inline-flex items-center justify-center px-1 py-1/2 rounded-full bg-green-100 text-green-800 text-xs font-semibold"> </span>
+                            <span class="text-xs">Libertadores</span>
+                        </div>
+                        <div class="items-center justify-center gap-2 min-w-[130px]">
+                            <span
+                                class="inline-flex items-center justify-center px-1 py-1/2 rounded-full bg-blue-100 text-blue-800 text-xs font-semibold"> </span>
+                            <span class="text-xs">Pré-libertadores</span>
+                        </div>
+                        <div class="items-center justify-center gap-2 min-w-[130px]">
+                            <span
+                                class="inline-flex items-center justify-center px-1 py-1/2 rounded-full bg-orange-100 text-orange-800 text-xs font-semibold"> </span>
+                            <span class="text-xs">Sulamericana</span>
+                        </div>
+                        <div class="items-center justify-center gap-2 min-w-[130px]">
+                            <span
+                                class="inline-flex items-center justify-center px-1 py-1/2 rounded-full bg-red-100 text-red-800 text-xs font-semibold"> </span>
+                            <span class="text-xs">Rebaixamento</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-</div>
         <!-- Matches Section -->
         <div class="p-4 overflow-y-auto" data-section="matches-section">
             <!-- Matches Card -->
             <div class="bg-white rounded-lg shadow overflow-hidden" data-section="matches-card">
                 <!-- Matches Header -->
-                <div class="flex flex-col items-center gap-2 p-4 border-b border-gray-200" data-section="matches-header">
-                    <h2 class="text-lg font-bold flex items-center gap-2">Jogos da Rodada</h2>
+                <div class="flex flex-col items-center gap-2 p-4 border-b border-gray-200"
+                    data-section="matches-header">
+                    <h2 class="text-lg font-bold flex items-center gap-2">
+                        Jogos da Rodada
+                    </h2>
                     <div class="flex items-center justify-center gap-4">
                         <button id="prev-round"
                             class="p-2 border border-gray-100 rounded-lg text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-                            disabled>←</button>
+                            disabled>
+                            ←
+                        </button>
                         <div class="flex flex-col items-center w-36">
                             <span id="round-title" class="text-lg font-semibold text-center">Rodada 16</span>
                             <span id="round-date" class="text-sm text-gray-500 text-center">23/07 ou 24/07</span>
                         </div>
                         <button id="next-round"
                             class="p-2 border border-gray-100 rounded-lg text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed">
-                            →</button>
+                            →
+                        </button>
                     </div>
                 </div>
                 <!-- Matches List -->
@@ -146,13 +172,23 @@
 
     <!-- Floating action bar: moved from header for better mobile UX -->
     <div id="floating-actions" class="fixed left-0 right-0 bottom-4 flex justify-center pointer-events-none z-50">
-        <div class="bg-white border border-gray-200 rounded-full shadow-lg px-4 py-2 flex items-center gap-2 pointer-events-auto">
-            <button id="simulate-round" class="p-2 rounded-md border text-white bg-blue-600 border-blue-600 hover:bg-blue-700 transition">Simular</button>
-            <button id="clear-round" class="p-2 rounded-md border text-white bg-red-500 border-red-500 hover:bg-red-600 transition">Limpar</button>
-            <button id="reset-championship" class="p-2 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 transition">Reiniciar</button>
+        <div
+            class="bg-white border border-gray-200 rounded-full shadow-lg px-4 py-2 flex items-center gap-2 pointer-events-auto">
+            <button id="simulate-round"
+                class="p-2 rounded-md border text-white bg-blue-600 border-blue-600 hover:bg-blue-700 transition">
+                Simular
+            </button>
+            <button id="clear-round"
+                class="p-2 rounded-md border text-white bg-red-500 border-red-500 hover:bg-red-600 transition">
+                Limpar
+            </button>
+            <button id="reset-championship"
+                class="p-2 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 transition">
+                Reiniciar
+            </button>
         </div>
     </div>
-    
+
     <!-- External scripts (entrypoint as ES module) -->
     <script type="module" src="js/main.js"></script>
 </body>
