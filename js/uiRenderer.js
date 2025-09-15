@@ -210,8 +210,8 @@ export const UIRenderer = {
                 row.setAttribute('data-team-id', String(team.id));
                 row.innerHTML = `
                     <td class="text-center content-center">${team.games || 0}</td>
-                    <td class="text-center content-center">${team.draws || 0}</td>
                     <td class="text-center content-center">${team.victories || 0}</td>
+                    <td class="text-center content-center">${team.draws || 0}</td>
                     <td class="text-center content-center">${team.defeats || 0}</td>
                     <td class="text-center content-center">${team.goal_pro || 0}</td>
                     <td class="text-center content-center">${team.goal_against || 0}</td>
