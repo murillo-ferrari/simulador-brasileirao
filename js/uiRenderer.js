@@ -165,15 +165,15 @@ export const UIRenderer = {
                 let badgeClass = '';
                 switch (true) {
                     case team.position <= 4:
-                        badgeClass = 'bg-green-100 text-green-800'; break;
+                        badgeClass = 'text-green-600'; break;
                     case team.position <= 6:
-                        badgeClass = 'bg-blue-100 text-blue-800'; break;
+                        badgeClass = 'text-green-300'; break;
                     case team.position <= 12:
-                        badgeClass = 'bg-orange-100 text-orange-800'; break;
+                        badgeClass = 'text-blue-600'; break;
                     case team.position <= 16:
-                        badgeClass = 'bg-gray-100 text-gray-700'; break;
+                        badgeClass = 'text-gray-400'; break;
                     default:
-                        badgeClass = 'bg-red-100 text-red-800'; break;
+                        badgeClass = 'text-red-600'; break;
                 }
                 const row = document.createElement('tr');
                 row.classList.add('h-12', 'border-b', 'grid', 'grid-cols-[15%_70%_15%]');
