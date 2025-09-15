@@ -16,26 +16,26 @@ export const MatchManager = {
         if (!state.matches || state.matches.length === 0) return;
 
         state.matches.forEach((match) => {
-            if (!MatchService.isMatchComplete(match)) {
-                const result = MatchService.simulateMatch(match);
-                // if there was a previously applied result, reverse it first
-                if (state.simulatedMatches.has(match.id)) {
-                    const prev = state.simulatedMatches.get(match.id);
-                    MatchManager._reverseMatchResultByValues(
-                        match,
-                        prev.homeScore,
-                        prev.awayScore
-                    );
-                }
-                match.homeScore = result.homeScore;
-                match.awayScore = result.awayScore;
-
-                MatchManager._applyMatchResult(match);
-                state.simulatedMatches.set(match.id, {
-                    homeScore: match.homeScore,
-                    awayScore: match.awayScore,
-                });
+            // If a result was previously simulated, reverse it first
+            if (state.simulatedMatches.has(match.id)) {
+                const prev = state.simulatedMatches.get(match.id);
+                MatchManager._reverseMatchResultByValues(
+                    match,
+                    prev.homeScore,
+                    prev.awayScore
+                );
+                state.simulatedMatches.delete(match.id);
             }
+            // Always generate a new random result
+            const result = MatchService.simulateMatch(match);
+            match.homeScore = result.homeScore;
+            match.awayScore = result.awayScore;
+
+            MatchManager._applyMatchResult(match);
+            state.simulatedMatches.set(match.id, {
+                homeScore: match.homeScore,
+                awayScore: match.awayScore,
+            });
         });
     },
 

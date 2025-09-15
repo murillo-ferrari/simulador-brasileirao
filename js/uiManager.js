@@ -110,10 +110,14 @@ function setupEventListeners() {
 			case 's': // Ctrl/Cmd + Shift + S -> simulate
 				e.preventDefault();
 				MatchManager.simulateRound();
+				UIManager.renderMatches();
+				UIManager.renderStandings();
 				break;
 			case 'd': // Ctrl/Cmd + Shift + D -> clear (D like 'delete/clear')
 				e.preventDefault();
 				MatchManager.clearRound();
+				UIManager.renderMatches();
+				UIManager.renderStandings();
 				break;
 		}
 	});
