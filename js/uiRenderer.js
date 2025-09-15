@@ -1,7 +1,6 @@
 // Renders UI components based on the current state
 import { TeamService } from './teamService.js';
 import { MatchService } from './matchService.js';
-import { CONFIG } from './config.js';
 import { state } from './dataManager.js';
 import { StandingsCalculator } from './standingsCalculator.js';
 import { MatchManager } from './matchManager.js';
@@ -9,20 +8,13 @@ import { Utils } from './utils.js';
 
 export const UIRenderer = {
 
+
     /**
-     * Renders a match card for a given match.
-     * The match card consists of three columns: the home team (left column),
-     * the score inputs (middle column), and the away team (right column).
-     * The home team and away team have their logos and names displayed.
-     * The score inputs are number inputs with min and max values based on the
-     * CONFIG.MAX_GOALS constant. The inputs are also given an aria-label
-     * with the name of the team.
-     * The match card also receives a data-match-complete attribute that is set to
-     * true if the match is complete, and false otherwise. A CSS class is also
-     * added to the match card element to style it based on whether the match is
-     * complete or not.
-     * @param {Object} match - The match object to render.
-     * @returns {string} The rendered HTML string.
+     * Renders a single match card based on the given match data.
+     * Resolves canonical team metadata (name, acronym, logo) and renders
+     * the match card with input fields for score editing.
+     * @param {Object} match - match data object with homeTeam and awayTeam
+     * @returns {string} - rendered match card HTML string
      */
     renderMatchCard(match) {
         // Resolve canonical metadata (may return null if not available)
@@ -39,7 +31,7 @@ export const UIRenderer = {
         const matchId = match.id;
         const isComplete = MatchService.isMatchComplete(match);
 
-        // Left column: home team (name right-aligned, logo to the left of the center)
+        // Left column: home team
         const leftCol = `
             <div class="flex lg:min-w-[9.375rem] items-center justify-between gap-2">
                     <div class="flex-1 text-right">
@@ -58,7 +50,7 @@ export const UIRenderer = {
                 <input value="${match.awayScore ?? ''}" data-match-id="${matchId}" data-field="awayScore" data-team-id="${awayMeta.id}" class="match-input w-12 h-8 text-center border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400" aria-label="Placar do ${awayName}">
             </div>`;
 
-        // Right column: away team (logo then name)
+        // Right column: away team
         const rightCol = `
             <div class="flex lg:min-w-[9.375rem] items-center justify-between gap-2">
                 <div class="flex items-center">

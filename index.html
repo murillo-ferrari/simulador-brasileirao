@@ -10,7 +10,7 @@
 </head>
 
 <body class="bg-gray-50">
-    <!-- Loading Overlay (moved to top so it displays before page content) -->
+    <!-- Loading Overlay -->
     <div id="loading"
         class="fixed inset-0 bg-white bg-opacity-95 flex flex-col items-center justify-center gap-4 z-[9999]"
         data-section="loading-overlay">
@@ -51,8 +51,6 @@
                         <table class="min-w-max border-collapse">
                             <thead>
                                 <tr class="h-10 border-b grid grid-cols-[85%_15%]">
-                                    <!-- <th class="bg-gray-50 text-xs font-medium text-gray-500 uppercase content-center">
-                                    </th> -->
                                     <th
                                         class="bg-gray-50 text-xs font-medium text-gray-500 uppercase content-center px-4 text-left">
                                         Classificaçao
@@ -64,7 +62,7 @@
                                 </tr>
                             </thead>
                             <tbody id="standings-fixed-body">
-                                <!-- first 3 columns populated by JS -->
+                                <!-- first 3 columns populated dinamically -->
                             </tbody>
                         </table>
                     </div>
@@ -104,7 +102,7 @@
                                 </tr>
                             </thead>
                             <tbody class="overflow-x-auto flex-1 w-full" id="standings-scroll-body">
-                                <!-- remaining columns populated by JS -->
+                                <!-- remaining columns populated dinamically -->
                             </tbody>
                         </table>
                     </div>
@@ -164,7 +162,7 @@
                 </div>
                 <!-- Matches List -->
                 <div class="flex flex-col w-full p-4 gap-4" id="matches-list" data-section="matches-list">
-                    <!-- Matches will be populated by JavaScript -->
+                    <!-- Matches will be populated dynamically -->
                 </div>
             </div>
         </div>
@@ -190,7 +188,7 @@
         </div>
     </div>
 
-    <!-- External scripts (entrypoint as ES module) -->
+    <!-- External scripts -->
     <script type="module" src="js/main.js"></script>
 </body>
 
