@@ -29,7 +29,7 @@
                 <div class="flex flex-col items-center gap-2 p-4 border-b border-gray-200"
                     data-section="standings-header">
                     <h1 class="text-2xl font-bold">
-                        Classificação do Campeonato Brasileiro
+                        Simulador do Campeonato Brasileiro
                     </h1>
                     <!-- Table Controls -->
                     <div class="flex items-center gap-2 md:hidden w-full justify-center" data-section="table-controls">
@@ -137,7 +137,7 @@
             </div>
         </div>
         <!-- Matches Section -->
-        <div class="p-4 overflow-y-auto" data-section="matches-section">
+        <div class="p-4 overflow-y-auto mb-10 md:mb-0" data-section="matches-section">
             <!-- Matches Card -->
             <div class="bg-white rounded-lg shadow overflow-hidden" data-section="matches-card">
                 <!-- Matches Header -->
@@ -170,8 +170,8 @@
         </div>
     </div>
 
-    <!-- Floating action bar: moved from header for better mobile UX -->
-    <div id="floating-actions" class="fixed left-0 right-0 bottom-4 flex justify-center pointer-events-none z-50">
+    <!-- Floating action bar -->
+    <div id="floating-actions" class="fixed left-0 right-0 bottom-4 flex justify-center pointer-events-none z-50 opacity-90">
         <div
             class="bg-white border border-gray-200 rounded-full shadow-lg px-4 py-2 flex items-center gap-2 pointer-events-auto">
             <button id="simulate-round"
