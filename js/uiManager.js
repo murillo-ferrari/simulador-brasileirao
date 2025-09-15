@@ -52,6 +52,35 @@ function refreshElements() {
  * @private
  */
 function setupEventListeners() {
+	// Highlight teams in standings when a score input is focused
+	document.addEventListener('focusin', (e) => {
+		if (e.target && e.target.matches('input.match-input[data-match-id][data-team-id]')) {
+			const matchId = e.target.getAttribute('data-match-id');
+			const teamId = e.target.getAttribute('data-team-id');
+			// Find the match object
+			const match = state.matches.find(m => String(m.id) === String(matchId));
+			if (!match) return;
+			// Highlight both teams, passing matchId
+			Utils.highlightTeamsInStandings([match.homeTeam.id, match.awayTeam.id], matchId);
+		}
+	});
+
+	document.addEventListener('focusout', (e) => {
+		if (e.target && e.target.matches('input.match-input[data-match-id][data-team-id]')) {
+			const matchId = e.target.getAttribute('data-match-id');
+			// If focus is moving to another input of the same match, do not remove highlight
+			const related = e.relatedTarget;
+			if (related && related.matches && related.matches('input.match-input[data-match-id][data-team-id]')) {
+				const relatedMatchId = related.getAttribute('data-match-id');
+				if (String(relatedMatchId) === String(matchId)) {
+					// Still within the same match, do not remove
+					return;
+				}
+			}
+			Utils.removeTeamHighlights(matchId);
+		}
+	});
+
 	// Ensure elements are current
 	refreshElements();
 
@@ -169,7 +198,7 @@ export const UIManager = {
 			console.debug('uiManager: initial refreshElements deferred', e);
 		}
 	},
-	
+
 	/**
 	 * Hides the loading overlay, if it exists.
 	 * @private

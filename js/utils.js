@@ -1,7 +1,52 @@
 import { CONFIG } from './config.js';
 
 // Utility functions
+let _currentHighlightedMatchId = null;
+
 export const Utils = {
+    /**
+     * Highlights the given team IDs in both standings tables (fixed and scrollable), tracking the matchId.
+     * @param {string[]|number[]} teamIds - Array of team IDs to highlight
+     * @param {string|number} matchId - The matchId for which highlight is being applied
+     */
+    highlightTeamsInStandings: function(teamIds, matchId) {
+        _currentHighlightedMatchId = matchId;
+        const bodies = [
+            document.getElementById('standings-fixed-body'),
+            document.getElementById('standings-scroll-body')
+        ];
+        bodies.forEach(body => {
+            if (!body) return;
+            [...body.querySelectorAll('tr[data-team-id]')].forEach(row => {
+                if (teamIds.includes(row.getAttribute('data-team-id')) || teamIds.includes(Number(row.getAttribute('data-team-id')))) {
+                    row.classList.add('highlighted-team', 'bg-gray-100', 'transition-colors')
+                }
+            });
+        });
+    },
+
+    /**
+     * Removes highlights only if the matchId matches the currently highlighted one.
+     * @param {string|number} matchId - The matchId for which highlight should be removed
+     */
+    removeTeamHighlights: function(matchId) {
+        if (_currentHighlightedMatchId !== null && String(_currentHighlightedMatchId) !== String(matchId)) {
+            // Don't remove highlight if focus is still within the same match
+            return;
+        }
+        _currentHighlightedMatchId = null;
+        const bodies = [
+            document.getElementById('standings-fixed-body'),
+            document.getElementById('standings-scroll-body')
+        ];
+        bodies.forEach(body => {
+            if (!body) return;
+            [...body.querySelectorAll('tr[data-team-id]')].forEach(row => {
+                row.classList.remove('highlighted-team', 'bg-gray-100', 'transition-colors')
+            });
+        });
+    },
+
     /**
      * Generates a random score between 0 and 6, with a given weight distribution.
      * The weights are:

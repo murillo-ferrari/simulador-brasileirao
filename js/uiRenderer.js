@@ -53,9 +53,9 @@ export const UIRenderer = {
         // Middle column: inputs for scores
         const middleCol = `
             <div class="flex items-center content-center gap-2">
-                <input type="number" min="0" max="${CONFIG.MAX_GOALS}" value="${match.homeScore ?? ''}" data-match-id="${matchId}" data-field="homeScore" class="match-input w-12 h-8 text-center border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400" aria-label="Placar do ${homeName}">
+                <input type="number" min="0" max="${CONFIG.MAX_GOALS}" value="${match.homeScore ?? ''}" data-match-id="${matchId}" data-field="homeScore" data-team-id="${homeMeta.id}" class="match-input w-12 h-8 text-center border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400" aria-label="Placar do ${homeName}">
                 <span aria-hidden="true">×</span>
-                <input type="number" min="0" max="${CONFIG.MAX_GOALS}" value="${match.awayScore ?? ''}" data-match-id="${matchId}" data-field="awayScore" class="match-input w-12 h-8 text-center border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400" aria-label="Placar do ${awayName}">
+                <input type="number" min="0" max="${CONFIG.MAX_GOALS}" value="${match.awayScore ?? ''}" data-match-id="${matchId}" data-field="awayScore" data-team-id="${awayMeta.id}" class="match-input w-12 h-8 text-center border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-400" aria-label="Placar do ${awayName}">
             </div>`;
 
         // Right column: away team (logo then name)
