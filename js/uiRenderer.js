@@ -180,14 +180,14 @@ export const UIRenderer = {
                 row.setAttribute('data-team-id', String(team.id));
                 row.innerHTML = `
                     <td class="flex items-center justify-center content-center relative">
-                        <span class="px-2 py-1 rounded-full text-xs font-medium ${badgeClass}">${team.position}</span>
+                        <span class="px-2 py-1 text-xs ${badgeClass}">${team.position}</span>
                     </td>
                     <td class="flex items-center content-center gap-2">
                         <div class="relative w-2 h-6 flex items-center justify-center" aria-hidden="true">
                             ${changeIndicatorHtml}
                         </div>
                         <div class="flex items-center gap-2" data-team-name="${canonical.name || team.name || ''}">
-                            <div class="flex team-logo">
+                            <div class="hidden md:flex team-logo">
                                 <img class="w-7 h-7 object-contain flex-shrink-0" src="${TeamService.getTeamLogo(canonical, state)}" alt="${canonical.name || ''}">
                             </div>
                             <div>
@@ -209,13 +209,13 @@ export const UIRenderer = {
                 row.classList.add('h-12', 'border-b', 'grid', 'grid-cols-7');
                 row.setAttribute('data-team-id', String(team.id));
                 row.innerHTML = `
-                    <td class="text-center content-center">${team.games || 0}</td>
-                    <td class="text-center content-center">${team.victories || 0}</td>
-                    <td class="text-center content-center">${team.draws || 0}</td>
-                    <td class="text-center content-center">${team.defeats || 0}</td>
-                    <td class="text-center content-center">${team.goal_pro || 0}</td>
-                    <td class="text-center content-center">${team.goal_against || 0}</td>
-                    <td class="text-center content-center ${team.balance_goals >= 0 ? 'text-green-600' : 'text-red-600'}">${team.balance_goals >= 0 ? '+' : ''}${team.balance_goals || 0}</td>
+                    <td class="text-sm text-center content-center">${team.games || 0}</td>
+                    <td class="text-sm text-center content-center">${team.victories || 0}</td>
+                    <td class="text-sm text-center content-center">${team.draws || 0}</td>
+                    <td class="text-sm text-center content-center">${team.defeats || 0}</td>
+                    <td class="text-sm text-center content-center">${team.goal_pro || 0}</td>
+                    <td class="text-sm text-center content-center">${team.goal_against || 0}</td>
+                    <td class="text-sm text-center content-center ${team.balance_goals >= 0 ? 'text-green-600' : 'text-red-600'}">${team.balance_goals >= 0 ? '+' : ''}${team.balance_goals || 0}</td>
                 `;
                 return row;
             };
