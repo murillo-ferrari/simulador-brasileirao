@@ -22,7 +22,7 @@
     <div class="flex justify-center content-center flex-col min-h-screen md:flex-row max-w-[1200px] mx-auto"
         data-section="main-container">
         <!-- Standings Section -->
-        <div class="p-4 overflow-y-auto" data-section="standings-section">
+        <div class="p-4 overflow-y-auto min-w-[320px] md:min-w-[380px]" data-section="standings-section">
             <!-- Standings Card -->
             <div class="bg-white rounded-lg shadow overflow-hidden" data-section="standings-card">
                 <!-- Standings Header -->
@@ -137,7 +137,7 @@
             </div>
         </div>
         <!-- Matches Section -->
-        <div class="p-4 overflow-y-auto mb-10 md:mb-0" data-section="matches-section">
+        <div class="p-4 overflow-y-auto mb-10 md:mb-0 min-w-[320px] md:min-w-[380px]" data-section="matches-section">
             <!-- Matches Card -->
             <div class="bg-white rounded-lg shadow overflow-hidden" data-section="matches-card">
                 <!-- Matches Header -->
@@ -171,7 +171,8 @@
     </div>
 
     <!-- Floating action bar -->
-    <div id="floating-actions" class="fixed left-0 right-0 bottom-4 flex justify-center pointer-events-none z-50 opacity-90">
+    <div id="floating-actions"
+        class="fixed left-0 right-0 bottom-4 flex justify-center pointer-events-none z-50 opacity-90">
         <div
             class="bg-white border border-gray-200 rounded-full shadow-lg px-4 py-2 flex items-center gap-2 pointer-events-auto">
             <button id="simulate-round"
